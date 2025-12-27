@@ -67,12 +67,18 @@ class BookAnalyzer:
         return True
     
     def analyze(self, image: np.ndarray) -> BookVerificationResult:
-        """Perform book verification analysis."""
-        findings, score = [], 0.5
+        """Perform book verification analysis.
+        
+        Score interpretation:
+        - Low score (0.0-0.3) = likely authentic (real readable text)
+        - High score (0.7-1.0) = likely fake (gibberish/AI-generated text)
+        """
+        findings, score = [], 0.3  # Start assuming authentic
         
         ocr_text = self._extract_text(image)
         if not ocr_text:
-            return BookVerificationResult(score=0.6, findings=["No text detected"], book_found=False, ocr_text="")
+            # No text detected - slightly suspicious but inconclusive
+            return BookVerificationResult(score=0.5, findings=["No text detected"], book_found=False, ocr_text="")
         
         title, author = self._parse_book_details(ocr_text)
         findings.append(f"Detected title: {title}")
@@ -82,7 +88,10 @@ class BookAnalyzer:
         spelling_errors = self._check_spelling(ocr_text)
         if spelling_errors:
             findings.append(f"Spelling issues: {spelling_errors}")
-            score += 0.2
+            # AI-generated gibberish is THE STRONGEST fake indicator
+            # Base penalty + additional for each error found
+            error_count = len(spelling_errors)
+            score += 0.35 + min(0.25, error_count * 0.05)  # Max +0.6 for many errors
         
         book_info = search_openlibrary(title, author)
         if not book_info:
@@ -90,11 +99,13 @@ class BookAnalyzer:
         
         book_found = book_info is not None
         if book_found:
+            # Real book found - strong authenticity signal
             findings.append(f"Book found: '{book_info.title}' by {book_info.author}")
-            score -= 0.2
+            score -= 0.15
         else:
+            # Book not found - could be rare book or fake
             findings.append("Book not found in online databases")
-            score += 0.15
+            score += 0.1
         
         return BookVerificationResult(
             score=max(0.0, min(1.0, score)),

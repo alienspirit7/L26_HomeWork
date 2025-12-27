@@ -54,23 +54,32 @@ class EyeAnalyzer:
         return blinks, len(blinks) / duration_min if duration_min > 0 else 0
     
     def analyze(self, frames: List[np.ndarray], fps: float) -> EyeAnalysisResult:
-        """Full eye movement analysis."""
-        findings, score = [], 0.5
+        """Full eye movement analysis.
+        
+        Score interpretation:
+        - Low score (0.0-0.3) = natural eye behavior (authentic)
+        - High score (0.7-1.0) = unnatural patterns (likely fake)
+        """
+        findings, score = [], 0.25  # Start assuming authentic
         blinks, blink_rate = self._detect_blinks(frames, fps)
         min_rate, max_rate = self.NORMAL_BLINK_RANGE
         
-        if blink_rate < min_rate * 0.5:
+        # Zero or near-zero blinks is THE STRONGEST fake signal
+        if blink_rate == 0:
+            findings.append(f"NO BLINKS detected (normal: {min_rate}-{max_rate}/min)")
+            score += 0.5  # Very strong fake indicator
+        elif blink_rate < min_rate * 0.5:
             findings.append(f"Very low blink rate: {blink_rate:.1f}/min (normal: {min_rate}-{max_rate})")
-            score += 0.25
+            score += 0.4  # Strong fake indicator
         elif blink_rate < min_rate:
             findings.append(f"Low blink rate: {blink_rate:.1f}/min (normal: {min_rate}-{max_rate})")
-            score += 0.1
+            score += 0.2
         elif blink_rate > max_rate * 2:
             findings.append(f"Unusually high blink rate: {blink_rate:.1f}/min")
-            score += 0.1
+            score += 0.15
         else:
             findings.append(f"Normal blink rate: {blink_rate:.1f}/min")
-            score -= 0.1
+            score -= 0.1  # Reward normal behavior
         
         if blinks:
             durations = [b.duration_frames / fps for b in blinks]
@@ -81,6 +90,7 @@ class EyeAnalyzer:
                 score += 0.15
             else:
                 findings.append(f"Normal blink duration: {avg_dur*1000:.0f}ms")
+                score -= 0.05  # Small reward for normal duration
         
         return EyeAnalysisResult(
             score=max(0.0, min(1.0, score)),

@@ -90,7 +90,12 @@ class DeepfakeDetector:
         return result
     
     def _calculate_verdict(self, result):
-        """Calculate final verdict based on all layer scores."""
+        """Calculate final verdict based on all layer scores.
+        
+        Score interpretation:
+        - Higher score = more manipulation indicators detected = LIKELY_DEEPFAKE
+        - Lower score = fewer anomalies = LIKELY_AUTHENTIC
+        """
         scores = {}
         if result.book_verification: scores["book_verification"] = result.book_verification.score
         if result.eye_analysis: scores["eye_analysis"] = result.eye_analysis.score
@@ -102,6 +107,12 @@ class DeepfakeDetector:
         if scores:
             result.confidence_score = calculate_weighted_score(scores, self.config.layer_weights)
         
+        # Add penalty for evidence frames (each documented issue adds fakeness)
+        if result.evidence_frames:
+            evidence_penalty = min(0.2, len(result.evidence_frames) * 0.03)
+            result.confidence_score = min(1.0, result.confidence_score + evidence_penalty)
+        
+        # Verdict based on thresholds (higher score = more fake)
         if result.confidence_score >= self.config.authentic_threshold:
             result.verdict = DetectionVerdict.LIKELY_DEEPFAKE
         elif result.confidence_score <= self.config.deepfake_threshold:

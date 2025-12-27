@@ -1,0 +1,104 @@
+{
+  "analysis_id": "d62e4c27-3dfc-44d3-8967-42393328238e",
+  "timestamp": "2025-12-27T23:26:02.339727Z",
+  "verdict": "LIKELY_AUTHENTIC",
+  "confidence_score": 0.4205882352941176,
+  "processing_time_seconds": 32.26081991195679,
+  "detection_layers": {
+    "book_verification": {
+      "score": 0.6,
+      "findings": [
+        "No text detected",
+        "Key: The most significant finding is the text on the book cover, 'THE ART of SCIENTARK NIRSINE'. The word 'SCIENTARK' is not a real word and appears to be a distorted or AI-generated attempt at a recognizable term (e.g., 'Scientific'). 'NIRSINE' is also nonsensical. Additionally, the smaller text below the main title is completely garbled and unreadable, which is a classic hallmark of AI generation attempting to render text on objects.",
+        "Key: Despite the clear AI artifacts on the book cover, the individual's facial features, expressions, eye movements, and overall physical appearance are remarkably natural and highly consistent with the provided reference photo. This suggests either an extremely high-quality deepfake (where human elements are almost perfect but text rendering fails), or a real person interacting with a digitally manipulated/AI-generated object.",
+        "Key: The stark contrast between the authentic-looking human subject and the artificial book cover text strongly indicates significant video manipulation or AI generation, impacting the overall authenticity of the content. The presence of such a prominent AI artifact, even if localized to an object, makes the entire video 'LIKELY_DEEPFAKE' as it signifies synthetic content."
+      ],
+      "book_found": false,
+      "book_title": null,
+      "spelling_errors": [
+        "SCIENTARK",
+        "NIRSINE",
+        "smaller unreadable text below the main title"
+      ]
+    },
+    "eye_analysis": {
+      "score": 0.4,
+      "findings": [
+        "Normal blink rate: 25.0/min",
+        "Normal blink duration: 175ms",
+        "Gemini: Eyes gaze naturally and consistently at the camera across all frames.",
+        "Gemini: A natural blink/eye-closure is observed in Frame 2 during a presumed laugh/exaggerated expression.",
+        "Gemini: No signs of unusual prolonged staring, unnatural rapid blinking, or irregular pupil dilation."
+      ],
+      "blink_rate": 25.0,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.4,
+      "findings": [
+        "Natural facial movement patterns"
+      ]
+    },
+    "body_movement": {
+      "score": 0.4,
+      "findings": [
+        "Natural head movement patterns"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.24999999999999997,
+      "findings": [
+        "High identity match: 92.67%",
+        "Consistent identity across frames"
+      ],
+      "reference_similarity": 0.9266972905880186,
+      "frame_variance": 0.0002986320566364742
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 2,
+      "timestamp": "00:00.20",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 3,
+      "timestamp": "00:00.30",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 4,
+      "timestamp": "00:00.40",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 5,
+      "timestamp": "00:00.50",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 6,
+      "timestamp": "00:00.60",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 7,
+      "timestamp": "00:00.70",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    },
+    {
+      "frame": 8,
+      "timestamp": "00:00.80",
+      "issue": "Nonsensical and garbled text 'SCIENTARK NIRSINE' and unreadable smaller text visible on the book cover, strongly indicative of AI generation."
+    }
+  ]
+}
