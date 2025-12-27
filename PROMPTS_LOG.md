@@ -201,15 +201,38 @@ Identified the issue as a macOS SDK compatibility problem with `dlib` (required 
 
 ---
 
-## Prompt 12
+## Prompt 13
 
 > **User Prompt:**
 > ```
-> Update prompts doc
+> Provide step by step explanation on what I should do now to 1) add training files (image and a few real and fake videos); 2) to run the tool on other photo and video files
 > ```
 
 **Action Taken:**
-Updated this PROMPTS_LOG.md file to include prompts 11-12.
+Provided detailed step-by-step instructions for:
+- Setting up the environment (activate venv, add API key)
+- Creating training folder structure (`training/references/`, `training/real/`, `training/fake/`)
+- File naming convention (`{person}_{real/fake}_{number}.mp4`)
+- Running the tool with various options
+
+---
+
+## Prompt 14
+
+> **User Prompt:**
+> ```
+> Create Quick start md file with similar overall instructions. When done, update prompts file
+> ```
+
+**Action Taken:**
+Created `QUICKSTART.md` with:
+- Prerequisites and setup instructions
+- Run commands and options table
+- Training file organization guide
+- Results interpretation (verdicts and exit codes)
+- Quick commands reference
+
+Updated this PROMPTS_LOG.md with prompts 13-14.
 
 ---
 
@@ -217,7 +240,7 @@ Updated this PROMPTS_LOG.md file to include prompts 11-12.
 
 | Metric | Value |
 |--------|-------|
-| Total Prompts | 12 |
-| Files Created | ~25 |
-| Total Lines of Code | ~2,300 |
-| Documentation Files | 3 (README.md, PRD.md, PROMPTS_LOG.md) |
+| Total Prompts | 14 |
+| Files Created | ~27 |
+| Total Lines of Code | ~2,400 |
+| Documentation Files | 4 (README.md, PRD.md, QUICKSTART.md, PROMPTS_LOG.md) |
