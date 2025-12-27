@@ -1,6 +1,7 @@
 """Utility helper functions."""
 
-from typing import Optional
+from __future__ import annotations
+from typing import List
 
 
 def format_timestamp(seconds: float) -> str:
@@ -32,7 +33,7 @@ def clamp(value: float, min_val: float = 0.0, max_val: float = 1.0) -> float:
     return max(min_val, min(max_val, value))
 
 
-def merge_findings(*finding_lists) -> list[str]:
+def merge_findings(*finding_lists) -> List[str]:
     """Merge multiple finding lists, removing duplicates."""
     seen = set()
     merged = []

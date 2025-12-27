@@ -1,9 +1,10 @@
 """Data models for the Deepfake Detection Tool."""
 
+from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 import uuid
 
 
@@ -17,8 +18,8 @@ class DetectionVerdict(Enum):
 @dataclass
 class LayerResult:
     """Result from a single detection layer."""
-    score: float  # 0.0 (authentic) to 1.0 (deepfake)
-    findings: list[str] = field(default_factory=list)
+    score: float
+    findings: List[str] = field(default_factory=list)
     metadata: dict = field(default_factory=dict)
 
 
@@ -28,7 +29,7 @@ class BookVerificationResult(LayerResult):
     book_found: bool = False
     book_title: Optional[str] = None
     book_author: Optional[str] = None
-    spelling_errors: list[str] = field(default_factory=list)
+    spelling_errors: List[str] = field(default_factory=list)
     ocr_text: Optional[str] = None
 
 
@@ -66,18 +67,13 @@ class DetectionResult:
     confidence_score: float = 0.5
     processing_time_seconds: float = 0.0
     
-    # Layer results
     book_verification: Optional[BookVerificationResult] = None
     eye_analysis: Optional[EyeAnalysisResult] = None
     facial_microexpressions: Optional[LayerResult] = None
     body_movement: Optional[LayerResult] = None
     audio_visual_sync: Optional[LayerResult] = None
     identity_match: Optional[IdentityMatchResult] = None
-    
-    # Evidence
-    evidence_frames: list[EvidenceFrame] = field(default_factory=list)
-    
-    # Raw Gemini analysis
+    evidence_frames: List[EvidenceFrame] = field(default_factory=list)
     gemini_analysis: Optional[str] = None
     
     def to_dict(self) -> dict:

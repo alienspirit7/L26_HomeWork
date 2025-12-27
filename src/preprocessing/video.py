@@ -1,5 +1,7 @@
 """Video processing utilities using OpenCV."""
 
+from __future__ import annotations
+from typing import List
 import cv2
 import numpy as np
 from pathlib import Path
@@ -10,8 +12,8 @@ from src.models import VideoMetadata
 @dataclass
 class ExtractedFrames:
     """Container for extracted video frames."""
-    frames: list[np.ndarray]
-    timestamps: list[float]
+    frames: List[np.ndarray]
+    timestamps: List[float]
     fps: float
     metadata: VideoMetadata
 
@@ -65,13 +67,9 @@ class VideoProcessor:
             raise ValueError(f"Cannot open video: {video_path}")
         
         metadata = self.get_metadata(video_path)
-        original_fps = metadata.fps
+        frame_interval = max(1, int(metadata.fps / self.target_fps))
         
-        # Calculate frame skip interval
-        frame_interval = max(1, int(original_fps / self.target_fps))
-        
-        frames = []
-        timestamps = []
+        frames, timestamps = [], []
         frame_count = 0
         
         while True:
@@ -80,10 +78,9 @@ class VideoProcessor:
                 break
             
             if frame_count % frame_interval == 0:
-                # Convert BGR to RGB
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 frames.append(frame_rgb)
-                timestamps.append(frame_count / original_fps)
+                timestamps.append(frame_count / metadata.fps)
                 
                 if max_frames and len(frames) >= max_frames:
                     break
@@ -99,17 +96,13 @@ class VideoProcessor:
             metadata=metadata,
         )
     
-    def extract_keyframes(self, video_path: str, num_keyframes: int = 5) -> list[np.ndarray]:
+    def extract_keyframes(self, video_path: str, num_keyframes: int = 5) -> List[np.ndarray]:
         """Extract evenly spaced keyframes for analysis."""
         metadata = self.get_metadata(video_path)
-        total_frames = metadata.total_frames
-        
-        if total_frames == 0:
+        if metadata.total_frames == 0:
             return []
         
-        # Calculate frame indices for keyframes
-        indices = np.linspace(0, total_frames - 1, num_keyframes, dtype=int)
-        
+        indices = np.linspace(0, metadata.total_frames - 1, num_keyframes, dtype=int)
         cap = cv2.VideoCapture(video_path)
         keyframes = []
         
@@ -117,20 +110,17 @@ class VideoProcessor:
             cap.set(cv2.CAP_PROP_POS_FRAMES, idx)
             ret, frame = cap.read()
             if ret:
-                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                keyframes.append(frame_rgb)
+                keyframes.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         
         cap.release()
         return keyframes
     
     def save_frame(self, frame: np.ndarray, output_path: str) -> str:
         """Save a frame to disk."""
-        # Convert RGB to BGR for OpenCV
-        frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-        cv2.imwrite(output_path, frame_bgr)
+        cv2.imwrite(output_path, cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
         return output_path
     
-    def frames_to_temp_images(self, frames: list[np.ndarray], temp_dir: str) -> list[str]:
+    def frames_to_temp_images(self, frames: List[np.ndarray], temp_dir: str) -> List[str]:
         """Save frames to temporary image files."""
         Path(temp_dir).mkdir(parents=True, exist_ok=True)
         paths = []

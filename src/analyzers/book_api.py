@@ -1,5 +1,7 @@
 """Book API search utilities - OpenLibrary and Google Books."""
 
+from __future__ import annotations
+from typing import Optional
 import requests
 from dataclasses import dataclass
 
@@ -15,7 +17,7 @@ class BookInfo:
     found: bool = True
 
 
-def search_openlibrary(title: str, author: str = None) -> BookInfo | None:
+def search_openlibrary(title: str, author: str = None) -> Optional[BookInfo]:
     """Search OpenLibrary API for book."""
     try:
         query = f"title:{title}"
@@ -45,7 +47,7 @@ def search_openlibrary(title: str, author: str = None) -> BookInfo | None:
         return None
 
 
-def search_google_books(title: str, author: str = None, api_key: str = None) -> BookInfo | None:
+def search_google_books(title: str, author: str = None, api_key: str = None) -> Optional[BookInfo]:
     """Search Google Books API for book."""
     try:
         query = title

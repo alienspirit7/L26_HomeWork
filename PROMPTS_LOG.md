@@ -236,11 +236,125 @@ Updated this PROMPTS_LOG.md with prompts 13-14.
 
 ---
 
+## Prompt 15
+
+> **User Prompt:**
+> ```
+> Which file formats are ok to use for photo and for video files in the tool? Is it stated in the ReadMe doc?
+> ```
+
+**Action Taken:**
+Confirmed supported formats from README:
+- Photos: `.jpg`, `.jpeg`, `.png`, `.webp` (min 512×512px)
+- Videos: `.mp4`, `.webm`, `.mov` (max 60 seconds)
+
+Added supported file formats section to QUICKSTART.md.
+
+---
+
+## Prompt 16
+
+> **User Prompt:**
+> ```
+> There is an error: module 'importlib.metadata' has no attribute 'packages_distributions'
+> TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+> ```
+
+**Action Taken:**
+Fixed Python 3.9 compatibility issues across 11 files:
+- Added `from __future__ import annotations` to all files
+- Replaced `X | None` → `Optional[X]`
+- Replaced `list[X]` → `List[X]`
+- Replaced `tuple[X, Y]` → `Tuple[X, Y]`
+
+---
+
+## Prompt 17
+
+> **User Prompt:**
+> ```
+> Continue
+> ```
+> *(Multiple dependency errors with protobuf, mediapipe, tensorflow)*
+
+**Action Taken:**
+Diagnosed protobuf version conflicts between packages:
+- MediaPipe needs protobuf < 4
+- TensorFlow needs protobuf >= 5.28
+- Updated requirements.txt with pinned versions
+- Updated Gemini integration to use new `google.genai` package
+- Changed default model from `gemini-2.0-flash-exp` to `gemini-1.5-flash`
+
+---
+
+## Prompt 18
+
+> **User Prompt:**
+> ```
+> most features didn't work as per what I see
+> ```
+> *(OCR error, tf-keras missing, Gemini quota exceeded)*
+
+**Action Taken:**
+Identified three issues:
+1. Tesseract not installed → `brew install tesseract`
+2. tf-keras missing → `pip install tf-keras`
+3. Gemini 429 quota exceeded → Changed model, made configurable via env var
+
+---
+
+## Prompt 19
+
+> **User Prompt:**
+> ```
+> errors again
+> ```
+> *(AttributeError: 'SymbolDatabase' object has no attribute 'GetPrototype')*
+
+**Action Taken:**
+Identified Python 3.9 as root cause of all compatibility issues. Recommended upgrading to Python 3.11:
+```bash
+brew install python@3.11
+rm -rf venv
+python3.11 -m venv venv
+source venv/bin/activate
+brew install tesseract
+pip install -r requirements.txt
+```
+
+---
+
+## Prompt 20
+
+> **User Prompt:**
+> ```
+> yes, I ran the above bash code, installed python 3.11 and all the requirements.txt
+> ```
+
+**Action Taken:**
+Confirmed successful installation with Python 3.11. All dependencies installed without conflicts. User ready to test the tool.
+
+---
+
+## Prompt 21
+
+> **User Prompt:**
+> ```
+> update prompts file
+> ```
+
+**Action Taken:**
+Updated this PROMPTS_LOG.md with prompts 15-21.
+
+---
+
 ## Session Statistics
 
 | Metric | Value |
 |--------|-------|
-| Total Prompts | 14 |
-| Files Created | ~27 |
-| Total Lines of Code | ~2,400 |
+| Total Prompts | 21 |
+| Files Created/Modified | ~30 |
+| Total Lines of Code | ~2,500 |
 | Documentation Files | 4 (README.md, PRD.md, QUICKSTART.md, PROMPTS_LOG.md) |
+| Python Version | Upgraded from 3.9 → 3.11 |
+

@@ -1,5 +1,7 @@
 """Face detection and processing using MediaPipe and DeepFace."""
 
+from __future__ import annotations
+from typing import Optional
 import numpy as np
 from dataclasses import dataclass
 from PIL import Image
@@ -9,9 +11,9 @@ import mediapipe as mp
 @dataclass
 class FaceData:
     """Detected face data."""
-    bbox: tuple[int, int, int, int]
+    bbox: tuple
     landmarks: dict
-    embedding: np.ndarray = None
+    embedding: Optional[np.ndarray] = None
     frame_index: int = 0
 
 
@@ -34,7 +36,7 @@ class FaceProcessor:
         self.face_detection = self.mp_face_detection.FaceDetection(
             model_selection=1, min_detection_confidence=0.5)
     
-    def detect_face(self, image: np.ndarray) -> FaceData | None:
+    def detect_face(self, image: np.ndarray) -> Optional[FaceData]:
         """Detect face in image and return face data."""
         results = self.face_detection.process(image)
         if not results.detections:
@@ -45,7 +47,7 @@ class FaceProcessor:
             bbox=(int(bbox.xmin * w), int(bbox.ymin * h), int(bbox.width * w), int(bbox.height * h)),
             landmarks={})
     
-    def get_face_mesh(self, image: np.ndarray, frame_index: int = 0) -> FaceMeshData | None:
+    def get_face_mesh(self, image: np.ndarray, frame_index: int = 0) -> Optional[FaceMeshData]:
         """Extract 468 face mesh landmarks."""
         results = self.face_mesh.process(image)
         if not results.multi_face_landmarks:
@@ -53,11 +55,10 @@ class FaceProcessor:
         landmarks = [{"x": lm.x, "y": lm.y, "z": lm.z} for lm in results.multi_face_landmarks[0].landmark]
         return FaceMeshData(landmarks=landmarks, frame_index=frame_index)
     
-    def get_face_embedding(self, image: np.ndarray) -> np.ndarray | None:
+    def get_face_embedding(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Get face embedding using DeepFace."""
         try:
             from deepface import DeepFace
-            # DeepFace expects BGR, but we have RGB - it handles conversion internally
             result = DeepFace.represent(image, model_name="Facenet", enforce_detection=False)
             if result and len(result) > 0:
                 return np.array(result[0]["embedding"])
@@ -69,13 +70,11 @@ class FaceProcessor:
     def compare_faces(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
         """Compare two face embeddings and return similarity score."""
         try:
-            # Cosine similarity
             dot = np.dot(emb1, emb2)
             norm1, norm2 = np.linalg.norm(emb1), np.linalg.norm(emb2)
             if norm1 == 0 or norm2 == 0:
                 return 0.0
             similarity = dot / (norm1 * norm2)
-            # Convert from [-1, 1] to [0, 1]
             return (similarity + 1) / 2
         except Exception as e:
             print(f"Face comparison error: {e}")

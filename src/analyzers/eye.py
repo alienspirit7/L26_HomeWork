@@ -1,5 +1,7 @@
 """Eye analysis for blink detection and movement patterns."""
 
+from __future__ import annotations
+from typing import List, Tuple
 import numpy as np
 from dataclasses import dataclass
 from src.models import EyeAnalysisResult
@@ -25,7 +27,7 @@ class EyeAnalyzer:
     def __init__(self, face_processor: FaceProcessor = None):
         self.face_processor = face_processor or FaceProcessor()
     
-    def _detect_blinks(self, frames: list, fps: float) -> tuple[list[BlinkEvent], float]:
+    def _detect_blinks(self, frames: list, fps: float) -> Tuple[List[BlinkEvent], float]:
         """Detect blinks from eye aspect ratio changes."""
         ear_values = []
         for i, frame in enumerate(frames):
@@ -51,7 +53,7 @@ class EyeAnalyzer:
         duration_min = (len(frames) / fps / 60) if fps > 0 else 1
         return blinks, len(blinks) / duration_min if duration_min > 0 else 0
     
-    def analyze(self, frames: list[np.ndarray], fps: float) -> EyeAnalysisResult:
+    def analyze(self, frames: List[np.ndarray], fps: float) -> EyeAnalysisResult:
         """Full eye movement analysis."""
         findings, score = [], 0.5
         blinks, blink_rate = self._detect_blinks(frames, fps)

@@ -1,5 +1,7 @@
 """Movement analysis for facial expressions and body movement."""
 
+from __future__ import annotations
+from typing import List
 import numpy as np
 from src.models import LayerResult
 from src.preprocessing.face import FaceProcessor
@@ -11,11 +13,11 @@ class MovementAnalyzer:
     def __init__(self, face_processor: FaceProcessor = None):
         self.face_processor = face_processor or FaceProcessor()
     
-    def analyze_expressions(self, frames: list[np.ndarray], fps: float) -> LayerResult:
+    def analyze_expressions(self, frames: List[np.ndarray], fps: float) -> LayerResult:
         """Analyze facial micro-expressions for consistency."""
         findings, score = [], 0.5
         landmark_positions = []
-        key_indices = [61, 291, 70, 300, 105, 334]  # Mouth corners, eyebrows
+        key_indices = [61, 291, 70, 300, 105, 334]
         
         for frame in frames:
             mesh = self.face_processor.get_face_mesh(frame)
@@ -52,7 +54,7 @@ class MovementAnalyzer:
         
         return LayerResult(score=max(0.0, min(1.0, score)), findings=findings)
     
-    def analyze_body(self, frames: list[np.ndarray], fps: float) -> LayerResult:
+    def analyze_body(self, frames: List[np.ndarray], fps: float) -> LayerResult:
         """Analyze body movement and pacing."""
         findings, score = [], 0.5
         face_positions = []

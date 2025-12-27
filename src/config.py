@@ -23,8 +23,8 @@ class Config:
     max_video_duration: int = int(os.getenv("MAX_VIDEO_DURATION", "60"))
     frame_extraction_fps: int = int(os.getenv("FRAME_EXTRACTION_FPS", "10"))
     
-    # Gemini model
-    gemini_model: str = "gemini-2.0-flash-exp"
+    # Gemini model - using 1.5 flash for better quota availability
+    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
     
     # Layer weights for final score
     layer_weights: dict = None

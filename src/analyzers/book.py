@@ -1,5 +1,7 @@
 """Book verification analyzer using OCR and book APIs."""
 
+from __future__ import annotations
+from typing import List, Tuple
 import re
 import numpy as np
 import pytesseract
@@ -27,7 +29,7 @@ class BookAnalyzer:
             print(f"OCR error: {e}")
             return ""
     
-    def _parse_book_details(self, text: str) -> tuple[str, str]:
+    def _parse_book_details(self, text: str) -> Tuple[str, str]:
         """Parse title and author from OCR text."""
         lines = [l.strip() for l in text.split('\n') if l.strip()]
         title, author = "", ""
@@ -41,7 +43,7 @@ class BookAnalyzer:
                     author = line
         return title, author
     
-    def _check_spelling(self, text: str) -> list[str]:
+    def _check_spelling(self, text: str) -> List[str]:
         """Check for AI-generated text artifacts."""
         errors = []
         for pattern in self.SPELLING_PATTERNS:
