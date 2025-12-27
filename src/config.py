@@ -13,7 +13,6 @@ class Config:
     
     # API Keys
     gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
-    google_books_api_key: str = os.getenv("GOOGLE_BOOKS_API_KEY", "")
     
     # Detection thresholds (higher score = more likely fake)
     # Below deepfake_threshold = LIKELY_AUTHENTIC
@@ -29,18 +28,17 @@ class Config:
     # Gemini model - using models/ prefix for google.genai
     gemini_model: str = os.getenv("GEMINI_MODEL", "models/gemini-2.5-flash")
     
-    # Layer weights for final score (higher = more important for detection)
+    # Layer weights for final score (all analyzed by Gemini)
     layer_weights: dict = None
     
     def __post_init__(self):
         if self.layer_weights is None:
             self.layer_weights = {
-                "book_verification": 0.35,  # Strongest AI indicator (gibberish text)
-                "eye_analysis": 0.25,        # No blinking is strong fake signal
-                "facial_microexpressions": 0.10,
-                "body_movement": 0.10,
-                "audio_visual_sync": 0.10,
-                "identity_match": 0.10,
+                "book_verification": 0.30,  # Book authenticity, spelling errors
+                "ai_signals": 0.25,          # AI artifacts, lighting, temporal issues
+                "body_movement": 0.20,       # Body pacing, movement paths
+                "eye_analysis": 0.15,        # Blinking patterns, gaze
+                "identity_match": 0.10,      # Reference matching
             }
     
     def validate(self) -> bool:
@@ -52,3 +50,4 @@ class Config:
 
 # Global config instance
 config = Config()
+

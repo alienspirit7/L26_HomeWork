@@ -352,9 +352,68 @@ Updated this PROMPTS_LOG.md with prompts 15-21.
 
 | Metric | Value |
 |--------|-------|
-| Total Prompts | 21 |
-| Files Created/Modified | ~30 |
-| Total Lines of Code | ~2,500 |
+| Total Prompts | 25 |
+| Files Created/Modified | ~40 |
+| Total Lines of Code | ~1,500 (reduced from ~2,500) |
 | Documentation Files | 4 (README.md, PRD.md, QUICKSTART.md, PROMPTS_LOG.md) |
 | Python Version | Upgraded from 3.9 → 3.11 |
 
+---
+
+## Prompt 22
+
+> **User Prompt:**
+> ```
+> Let's only keep gemini analysis and let gemini check and analyse all our stated checks (if book is real, if it has any spelling issues, body pacing and movement paths, any other AI signals).
+> ```
+
+**Action Taken:**
+Refactored the tool to use **Gemini-only analysis**, removing all local preprocessing analyzers.
+
+---
+
+## Prompt 23
+
+> **User Prompt:**
+> ```
+> remove all the unused scripts
+> ```
+
+**Action Taken:**
+Removed 7 unused files:
+- `biometric.py`, `book.py`, `book_api.py`, `eye.py`, `identity.py`, `movement.py` (from `analyzers/`)
+- `merge.py` (from `utils/`)
+
+---
+
+## Prompt 24
+
+> **User Prompt:**
+> ```
+> UPdate ReadMe file with updated infrastructure, flows, results output examples
+> ```
+
+**Action Taken:**
+Comprehensive README update:
+- Updated overview to reflect Gemini as sole AI engine
+- Simplified repository structure (removed deleted files)
+- New data flow diagram showing 6-step Gemini-only pipeline
+- Updated CLI options (removed `--gemini-only` and `--no-gemini`)
+- Updated example outputs with Gemini analysis categories
+
+---
+
+## Prompt 25
+
+> **User Prompt:**
+> ```
+> Do we not need to update Installation section as well? Do we still need all these things to install?
+> ```
+
+**Action Taken:**
+Simplified installation requirements:
+- **requirements.txt**: Reduced from 19 to 8 lines (removed mediapipe, pytesseract, deepface, pydantic, requests)
+- **README Prerequisites**: Removed CMake and Tesseract (only FFmpeg needed now)
+- Fixed import error in `gemini.py` (removed BOOK_ANALYSIS_PROMPT import)
+
+---

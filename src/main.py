@@ -13,19 +13,16 @@ from src.cli_output import print_header, print_results
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description="Deepfake Detection Tool using Gemini 3",
+        description="Deepfake Detection Tool using Gemini",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
     python -m src.main --photo person.jpg --video test.mp4
     python -m src.main --photo person.jpg --video test.mp4 --output result.json
-    python -m src.main --photo person.jpg --video test.mp4 --gemini-only
         """)
     parser.add_argument("--photo", "-p", required=True, help="Reference photo path")
     parser.add_argument("--video", "-v", required=True, help="Video file path")
     parser.add_argument("--output", "-o", help="JSON output path")
-    parser.add_argument("--gemini-only", action="store_true", help="Skip preprocessing")
-    parser.add_argument("--no-gemini", action="store_true", help="Skip Gemini analysis")
     parser.add_argument("--api-key", help="Gemini API key (overrides .env)")
     return parser.parse_args()
 
@@ -51,9 +48,7 @@ def main():
     try:
         result = detector.analyze(
             reference_photo=args.photo,
-            video_path=args.video,
-            use_gemini=not args.no_gemini,
-            use_preprocessing=not args.gemini_only)
+            video_path=args.video)
     except Exception as e:
         print(f"Error during analysis: {e}")
         sys.exit(1)
@@ -73,3 +68,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,18 +1,8 @@
-# Core dependencies
+# Core dependencies (Gemini-only analysis)
 google-genai>=1.0.0
 opencv-python>=4.8.0
-mediapipe==0.10.9
-pytesseract>=0.3.10
 pillow>=10.0.0
 numpy>=1.24.0
-requests>=2.31.0
-
-# Face recognition - using deepface instead of dlib
-deepface>=0.0.89
 
 # Utilities
 python-dotenv>=1.0.0
-pydantic>=2.0.0
-
-# Pin urllib3 for Python 3.9 compatibility
-urllib3<2.0.0

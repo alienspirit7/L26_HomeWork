@@ -22,16 +22,16 @@
 
 ## Overview
 
-The **Deepfake Detection Tool** is an AI-powered system that verifies whether a video is authentic or artificially generated (deepfake). It uses **Google Gemini 3** as its core AI engine combined with computer vision preprocessing to analyze multiple authenticity signals.
+The **Deepfake Detection Tool** is an AI-powered system that verifies whether a video is authentic or artificially generated (deepfake). It uses **Google Gemini** as its sole AI engine for comprehensive multimodal analysis.
 
 ### Key Features
 
 | Feature | Description |
 |---------|-------------|
 | **Identity Verification** | Compares video subject to a reference photo |
-| **Book Cover Analysis** | Verifies held objects via OCR and internet search |
-| **Biometric Analysis** | Analyzes eye blinks, micro-expressions, body movement |
-| **AI-Powered Detection** | Gemini 3 multimodal analysis for comprehensive assessment |
+| **Book Authenticity Check** | Verifies if book is real/published, checks for spelling errors |
+| **Body Movement Analysis** | Analyzes body pacing, movement paths, hand tremors |
+| **AI Signal Detection** | Detects blending artifacts, lighting issues, temporal anomalies |
 | **Detailed Reporting** | JSON output with layer-by-layer breakdown |
 
 ---
@@ -76,33 +76,32 @@ The book requirement serves as a **physical proof of presence**:
 | **Reference Photo** | Clear photo of the person's face | JPEG, PNG, WebP (min 512×512px) |
 | **Verification Video** | Video of person stating name/workplace while holding a book | MP4, WebM, MOV (max 60s) |
 
-### Analysis Layers
+### Analysis Layers (All Powered by Gemini)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     DEEPFAKE DETECTION LAYERS                        │
+│                  GEMINI MULTIMODAL ANALYSIS                          │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐     │
-│  │ BOOK ANALYSIS   │  │ EYE ANALYSIS    │  │ EXPRESSION      │     │
-│  │ • OCR extraction│  │ • Blink rate    │  │ • Micro-gestures│     │
-│  │ • Spelling check│  │ • Blink duration│  │ • Natural motion│     │
-│  │ • Book database │  │ • Eye movement  │  │ • Face symmetry │     │
+│  │ BOOK ANALYSIS   │  │ MOVEMENT        │  │ AI SIGNALS      │     │
+│  │ • Is book real? │  │ • Body pacing   │  │ • Blend artifacts│    │
+│  │ • Spelling check│  │ • Movement paths│  │ • Lighting issues│    │
+│  │ • AI text detect│  │ • Hand tremors  │  │ • Temporal glitch│    │
 │  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘     │
 │           │                    │                     │              │
-│  ┌────────▼────────┐  ┌────────▼────────┐  ┌────────▼────────┐     │
-│  │ BODY MOVEMENT   │  │ IDENTITY MATCH  │  │ GEMINI AI       │     │
-│  │ • Head movement │  │ • Face embedding│  │ • Multimodal    │     │
-│  │ • Hand gestures │  │ • Frame-to-frame│  │ • Comprehensive │     │
-│  │ • Natural pacing│  │ • Reference match│ │ • Deep analysis │     │
-│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘     │
-│           │                    │                     │              │
-│           └────────────────────┴─────────────────────┘              │
-│                                │                                    │
-│                    ┌───────────▼───────────┐                       │
-│                    │   WEIGHTED SCORING    │                       │
-│                    │   & FINAL VERDICT     │                       │
-│                    └───────────────────────┘                       │
+│  ┌────────▼────────┐  ┌────────▼────────┐                          │
+│  │ EYE ANALYSIS    │  │ IDENTITY MATCH  │                          │
+│  │ • Blink patterns│  │ • Photo matching│                          │
+│  │ • Gaze tracking │  │ • Frame-to-frame│                          │
+│  └────────┬────────┘  └────────┬────────┘                          │
+│           │                    │                                    │
+│           └────────────────────┘                                    │
+│                    │                                                │
+│        ┌───────────▼───────────┐                                   │
+│        │   WEIGHTED SCORING    │                                   │
+│        │   & FINAL VERDICT     │                                   │
+│        └───────────────────────┘                                   │
 │                                                                     │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -116,47 +115,33 @@ deepfake-detection/
 │
 ├── 📄 README.md                 # This documentation
 ├── 📄 PRD.md                    # Product Requirements Document
+├── 📄 QUICKSTART.md             # Quick start guide
+├── 📄 PROMPTS_LOG.md            # Development session prompts
 ├── 📄 requirements.txt          # Python dependencies
 ├── 📄 .env.example              # Environment variable template
-├── 📄 .gitignore                # Git ignore rules
 │
 ├── 📁 src/                      # Source code
-│   ├── __init__.py              # Package exports
 │   ├── config.py                # Configuration management
 │   ├── models.py                # Data models & types
-│   ├── detector.py              # Main detection orchestrator
+│   ├── detector.py              # Main Gemini-powered detector
 │   ├── main.py                  # CLI entry point
 │   ├── cli_output.py            # CLI formatting utilities
 │   │
-│   ├── 📁 preprocessing/        # Input processing modules
-│   │   ├── video.py             # Video frame extraction (OpenCV)
-│   │   ├── face.py              # Face detection (MediaPipe)
-│   │   └── audio.py             # Audio transcription (Whisper)
+│   ├── 📁 preprocessing/        # Input processing
+│   │   ├── video.py             # Video frame extraction
+│   │   ├── face.py              # Face detection
+│   │   └── audio.py             # Audio extraction
 │   │
-│   ├── 📁 analyzers/            # Detection analysis modules
-│   │   ├── book.py              # Book verification (OCR + APIs)
-│   │   ├── book_api.py          # OpenLibrary/Google Books search
-│   │   ├── biometric.py         # Biometric coordinator
-│   │   ├── eye.py               # Eye blink analysis
-│   │   ├── movement.py          # Facial/body movement analysis
-│   │   ├── identity.py          # Face matching
+│   ├── 📁 analyzers/            # Gemini analysis
 │   │   ├── gemini.py            # Gemini API integration
-│   │   └── prompts.py           # AI prompts
+│   │   └── prompts.py           # Analysis prompts
 │   │
-│   └── 📁 utils/                # Utility modules
-│       ├── helpers.py           # Helper functions
-│       └── merge.py             # Result merging
-│
-├── 📁 tests/                    # Test files
-│   └── __init__.py
+│   └── 📁 utils/                # Utilities
+│       └── helpers.py           # Helper functions
 │
 └── 📁 training/                 # Training data (optional)
     ├── 📁 real/                 # Known authentic videos
-    │   ├── person1_real_01.mp4
-    │   └── person1_real_02.mp4
     └── 📁 fake/                 # Known deepfake videos
-        ├── person1_fake_01.mp4
-        └── person1_fake_02.mp4
 ```
 
 ---
@@ -167,57 +152,36 @@ deepfake-detection/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                          DATA FLOW PROCESS                               │
+│                    GEMINI-ONLY DATA FLOW PROCESS                         │
 └─────────────────────────────────────────────────────────────────────────┘
 
-   INPUT                    PREPROCESSING                 ANALYSIS
-┌─────────────┐          ┌─────────────────┐         ┌─────────────────┐
-│ Reference   │          │                 │         │                 │
-│ Photo       │─────────▶│  Face Detection │────────▶│ Face Embedding  │
-│ (photo.jpg) │          │  + Embedding    │         │ (128-dim vector)│
-└─────────────┘          └─────────────────┘         └────────┬────────┘
-                                                              │
-                                                              ▼
-┌─────────────┐          ┌─────────────────┐         ┌─────────────────┐
-│ Video File  │          │                 │         │ Frame-by-frame  │
-│ (video.mp4) │─────────▶│ Frame Extraction│────────▶│ Face Comparison │
-│             │          │ (10 fps)        │         │                 │
-└─────────────┘          └────────┬────────┘         └────────┬────────┘
-                                  │                           │
-                                  ▼                           ▼
-                         ┌─────────────────┐         ┌─────────────────┐
-                         │ Audio Extraction│         │ Book Detection  │
-                         │ + Transcription │         │ + OCR           │
-                         └────────┬────────┘         └────────┬────────┘
-                                  │                           │
-                                  ▼                           ▼
-                         ┌─────────────────┐         ┌─────────────────┐
-                         │ Biometric       │         │ Book Verification│
-                         │ Analysis:       │         │ • OpenLibrary   │
-                         │ • Eye blinks    │         │ • Google Books  │
-                         │ • Expressions   │         │ • Spelling check│
-                         │ • Body movement │         │                 │
-                         └────────┬────────┘         └────────┬────────┘
-                                  │                           │
-                                  └─────────────┬─────────────┘
-                                                │
-                                                ▼
-                                  ┌─────────────────────────┐
-                                  │     GEMINI AI ANALYSIS   │
-                                  │  • Multimodal reasoning  │
-                                  │  • Cross-layer validation│
-                                  │  • Pattern detection     │
-                                  └────────────┬────────────┘
-                                               │
-                                               ▼
-                                  ┌─────────────────────────┐
-                                  │    RESULT AGGREGATION   │
-                                  │  • Weighted scoring     │
-                                  │  • Confidence calculation│
-                                  │  • Final verdict        │
-                                  └────────────┬────────────┘
-                                               │
-                                               ▼
+   INPUT                    PREPROCESSING                 GEMINI ANALYSIS
+┌─────────────┐          ┌─────────────────┐         ┌─────────────────────┐
+│ Reference   │          │                 │         │                     │
+│ Photo       │─────────▶│  Load Image     │────────▶│                     │
+│ (photo.jpg) │          │                 │         │                     │
+└─────────────┘          └─────────────────┘         │   GEMINI ANALYSIS   │
+                                                     │                     │
+┌─────────────┐          ┌─────────────────┐         │  • Book Authenticity│
+│ Video File  │          │                 │         │  • Spelling Errors  │
+│ (video.mp4) │─────────▶│ Frame Extraction│────────▶│  • Body Pacing      │
+│             │          │ (10 fps)        │         │  • Movement Paths   │
+└─────────────┘          └────────┬────────┘         │  • AI Signals       │
+                                  │                  │  • Eye Analysis     │
+                                  ▼                  │  • Identity Match   │
+                         ┌─────────────────┐         │                     │
+                         │ Audio Extraction│────────▶│                     │
+                         │ (optional)      │         └──────────┬──────────┘
+                         └─────────────────┘                    │
+                                                                ▼
+                                              ┌─────────────────────────┐
+                                              │    RESULT PROCESSING    │
+                                              │  • Weighted scoring     │
+                                              │  • Confidence calculation│
+                                              │  • Final verdict        │
+                                              └────────────┬────────────┘
+                                                           │
+                                                           ▼
    OUTPUT
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ DETECTION REPORT                                                        │
@@ -232,19 +196,12 @@ deepfake-detection/
 
 | Step | Module | What It Does | Possible Results |
 |------|--------|--------------|------------------|
-| **1. Reference Processing** | `face.py` | Extracts face from reference photo, generates 128-dimensional face embedding | Face found/not found |
-| **2. Frame Extraction** | `video.py` | Extracts video frames at 10 fps, gets metadata | Frames extracted, duration calculated |
-| **3. Audio Extraction** | `audio.py` | Extracts audio track, transcribes to text | Speech transcription for lip-sync analysis |
-| **4. Book Detection** | `book.py` | Detects book in frames, extracts text via OCR | Book title, author, text quality |
-| **5. Book Verification** | `book_api.py` | Searches OpenLibrary/Google Books for the book | Book exists/not found, publisher info |
-| **6. Spelling Analysis** | `book.py` | Checks OCR text for AI-generated artifacts | Spelling errors, garbled text |
-| **7. Eye Analysis** | `eye.py` | Measures blink rate, duration, patterns | Normal/abnormal blink behavior |
-| **8. Expression Analysis** | `movement.py` | Tracks facial micro-expressions over time | Natural/static/jerky expressions |
-| **9. Body Movement** | `movement.py` | Analyzes head movement and body pacing | Natural/unnatural movements |
-| **10. Identity Matching** | `identity.py` | Compares video faces to reference photo | Match percentage, consistency |
-| **11. Gemini Analysis** | `gemini.py` | Comprehensive AI multimodal analysis | Detailed observations across all dimensions |
-| **12. Score Aggregation** | `detector.py` | Combines all layer scores with weights | Weighted confidence score |
-| **13. Verdict Determination** | `detector.py` | Converts score to verdict | LIKELY_DEEPFAKE / LIKELY_AUTHENTIC / INCONCLUSIVE |
+| **1. Load Reference** | `detector.py` | Loads reference photo as image array | Image ready for Gemini |
+| **2. Frame Extraction** | `video.py` | Extracts video frames at 10 fps | Frames ready for analysis |
+| **3. Audio Extraction** | `audio.py` | Extracts audio track (optional) | Transcription for context |
+| **4. Gemini Analysis** | `gemini.py` | Sends frames + reference to Gemini | Comprehensive analysis JSON |
+| **5. Score Processing** | `detector.py` | Converts Gemini response to layer scores | Per-layer scores |
+| **6. Verdict** | `detector.py` | Calculates weighted score, determines verdict | LIKELY_DEEPFAKE / LIKELY_AUTHENTIC / INCONCLUSIVE |
 
 ---
 
@@ -252,29 +209,23 @@ deepfake-detection/
 
 ### Prerequisites
 
-Before installing Python packages, ensure you have these system dependencies:
-
 | Dependency | Purpose | Required |
 |------------|---------|----------|
-| **CMake** | Required to build `dlib` (face recognition) | ✅ Yes |
-| **Tesseract OCR** | Text extraction from book covers | ✅ Yes |
-| **FFmpeg** | Audio extraction from videos | ✅ Yes |
+| **FFmpeg** | Video frame extraction | ✅ Yes |
 | **Python 3.10+** | Runtime | ✅ Yes |
 
 ### Step 1: Install System Dependencies
 
 ```bash
 # macOS (using Homebrew)
-brew install cmake tesseract ffmpeg
+brew install ffmpeg
 
 # Ubuntu/Debian
-sudo apt install cmake tesseract-ocr ffmpeg
+sudo apt install ffmpeg
 
 # Windows (using Chocolatey)
-choco install cmake tesseract ffmpeg
+choco install ffmpeg
 ```
-
-> ⚠️ **Important:** CMake must be installed BEFORE running `pip install`. The `face-recognition` library requires CMake to compile its C++ dependencies.
 
 ### Step 2: Create Virtual Environment (Recommended)
 
@@ -291,7 +242,7 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 
-### Step 3: Configure Environment
+### Step 4: Configure Environment
 
 ```bash
 # Copy environment template
@@ -333,18 +284,14 @@ python -m src.main -p reference.jpg -v verification.mp4
 python -m src.main -p reference.jpg -v verification.mp4 --output result.json
 ```
 
-### Analysis Modes
+### CLI Options
 
-```bash
-# Full analysis (default) - preprocessing + Gemini
-python -m src.main -p photo.jpg -v video.mp4
-
-# Gemini only (faster, less detailed)
-python -m src.main -p photo.jpg -v video.mp4 --gemini-only
-
-# Preprocessing only (no API calls to Gemini)
-python -m src.main -p photo.jpg -v video.mp4 --no-gemini
-```
+| Option | Description |
+|--------|-------------|
+| `-p, --photo` | Reference photo path (required) |
+| `-v, --video` | Video file path (required) |
+| `-o, --output` | Save JSON report to file |
+| `--api-key` | Gemini API key (overrides .env) |
 
 ### Provide API Key via Command Line
 
@@ -409,41 +356,41 @@ ANALYSIS RESULTS
 
 VERDICT:             LIKELY_AUTHENTIC
 Confidence Score:    23.00%
-Processing Time:     42.3s
+Processing Time:     18.5s
 
 ------------------------------------------------------------
-LAYER SCORES
+LAYER SCORES (Gemini Analysis)
 ------------------------------------------------------------
 
 Book Verification: 15.00%
   • Detected title: Thinking, Fast and Slow
-  • Book found: 'Thinking, Fast and Slow' by Daniel Kahneman
-  • Publisher verified: Farrar, Straus and Giroux
+  • Book is REAL: 'Thinking, Fast and Slow' by Daniel Kahneman
+  • No spelling errors detected
+
+Movement Analysis: 20.00%
+  • Body pacing: natural
+  • No movement path issues detected
+
+AI Signals: 10.00%
+  • No blending artifacts
+  • Consistent lighting
+  • No temporal anomalies
 
 Eye Analysis: 25.00%
-  • Normal blink rate: 17.2/min
-  • Normal blink duration: 285ms
+  • Normal blink patterns observed
 
-Facial Expressions: 20.00%
-  • Natural facial movement patterns
-  • Normal micro-expression variance
-
-Body Movement: 30.00%
-  • Natural head movement patterns
-  • Normal body sway detected
-
-Identity Match: 25.00%
-  • High identity match: 92.00%
-  • Consistent identity across frames
+Identity Match: 30.00%
+  • Matches reference photo
+  • High consistency across frames
 
 ============================================================
 ```
 
 **What This Means:**
 - ✅ The book is real and correctly spelled
-- ✅ Blink rate and duration are within normal range
-- ✅ Facial movements appear natural
-- ✅ The person matches the reference photo with 92% similarity
+- ✅ Body movements appear natural
+- ✅ No AI generation artifacts detected
+- ✅ The person matches the reference photo
 - ✅ **Recommended Action**: Approve the verification
 
 ---
@@ -641,16 +588,16 @@ Edit `.env` file:
 # Required
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Optional: Higher rate limits for book search
-GOOGLE_BOOKS_API_KEY=your_google_books_api_key
-
 # Detection thresholds (optional)
-DEEPFAKE_THRESHOLD=0.5          # Below this = LIKELY_AUTHENTIC
-AUTHENTIC_THRESHOLD=0.7          # Above this = LIKELY_DEEPFAKE
+DEEPFAKE_THRESHOLD=0.35          # Below this = LIKELY_AUTHENTIC
+AUTHENTIC_THRESHOLD=0.55         # Above this = LIKELY_DEEPFAKE
 
 # Processing settings (optional)
 MAX_VIDEO_DURATION=60            # Maximum video length in seconds
 FRAME_EXTRACTION_FPS=10          # Frames per second to extract
+
+# Gemini model (optional)
+GEMINI_MODEL=models/gemini-2.5-flash
 ```
 
 ### Threshold Tuning

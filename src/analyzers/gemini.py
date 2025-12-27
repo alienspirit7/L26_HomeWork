@@ -7,10 +7,9 @@ import re
 import numpy as np
 from PIL import Image
 from google import genai
-from google.genai import types
 
 from src.config import config
-from src.analyzers.prompts import DEEPFAKE_ANALYSIS_PROMPT, BOOK_ANALYSIS_PROMPT
+from src.analyzers.prompts import DEEPFAKE_ANALYSIS_PROMPT
 
 
 class GeminiAnalyzer:
@@ -51,17 +50,6 @@ class GeminiAnalyzer:
             print(f"Gemini API error: {e}")
             return {"error": str(e), "overall_assessment": "INCONCLUSIVE", "confidence": 0.5}
     
-    def analyze_book_cover(self, image: np.ndarray) -> dict:
-        """Dedicated book cover analysis."""
-        try:
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=[BOOK_ANALYSIS_PROMPT, Image.fromarray(image)]
-            )
-            return self._parse_response(response.text)
-        except Exception as e:
-            return {"error": str(e)}
-    
     def _parse_response(self, text: str) -> dict:
         """Parse Gemini's JSON response."""
         json_match = re.search(r'```json\s*(.*?)\s*```', text, re.DOTALL)
@@ -74,3 +62,4 @@ class GeminiAnalyzer:
             return json.loads(text)
         except json.JSONDecodeError:
             return {"raw_response": text, "overall_assessment": "INCONCLUSIVE", "confidence": 0.5}
+
