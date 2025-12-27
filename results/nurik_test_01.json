@@ -1,99 +1,52 @@
 {
-  "analysis_id": "86908909-90eb-4157-aef7-41d1fedb2ef5",
-  "timestamp": "2025-12-27T23:33:58.018150Z",
-  "verdict": "LIKELY_DEEPFAKE",
-  "confidence_score": 0.7666666666666668,
-  "processing_time_seconds": 27.449574947357178,
+  "analysis_id": "21e725a9-315d-48c4-b66a-94948598c8c1",
+  "timestamp": "2025-12-27T23:56:09.583292Z",
+  "verdict": "LIKELY_AUTHENTIC",
+  "confidence_score": 0.0,
+  "processing_time_seconds": 14.091149091720581,
   "detection_layers": {
     "book_verification": {
-      "score": 0.7499999999999999,
+      "score": 0.0,
       "findings": [
-        "Detected title: ; : i",
-        "Detected author: DOLL/",
-        "Spelling issues: ['PLAYBOOK', '_', 'DOLL', '\u2014_', '\u2018', 'LEADERSHII', 'SILICON', '\u00a5', 'THE', 'VALLEYS']",
-        "Book found: 'I Love Lucy' by Susan Doll",
-        "Key: Strong identity match to the reference photo, with consistent facial features across all video frames.",
-        "Key: Book cover is authentic, clearly rendered, and free of AI artifacts.",
-        "Key: Significant abnormalities in facial expressions, characterized by unnatural stiffness, lack of micro-expressions, and isolated mouth movements.",
-        "Key: Extreme and unnatural stillness of the body and arms holding the book, lacking any natural human subtle movements or shifts.",
-        "Key: The combination of a highly accurate identity representation with highly unnatural dynamic movements (facial expressions, body posture) is a strong indicator of deepfake or AI manipulation."
+        "Key: The book 'Trillion Dollar Coach' is a legitimate publication, and its cover text, authors, and image are accurately rendered without any spelling errors, gibberish, or AI artifacts.",
+        "Key: Facial expressions and mouth movements are subtle, natural, and consistent with a person speaking or posing for a brief video.",
+        "Key: Hands and fingers holding the book are correctly proportioned and stable, showing no signs of glitches or anomalies.",
+        "Key: The identity of the person in the video frames perfectly matches the provided reference photo and remains highly consistent across all frames.",
+        "Key: No AI-generated artifacts such as blending issues, lighting inconsistencies, temporal flickering, or unrealistic skin/hair textures were observed."
       ],
       "book_found": true,
-      "book_title": "I Love Lucy",
-      "spelling_errors": [
-        "PLAYBOOK",
-        "_",
-        "DOLL",
-        "\u2014_",
-        "\u2018",
-        "LEADERSHII",
-        "SILICON",
-        "\u00a5",
-        "THE",
-        "VALLEYS"
-      ]
+      "book_title": "Trillion Dollar Coach",
+      "spelling_errors": []
     },
     "eye_analysis": {
-      "score": 0.75,
+      "score": 0.0,
       "findings": [
-        "NO BLINKS detected (normal: 15-20/min)",
-        "Gemini: Eyes are generally open and directed forward towards the camera.",
-        "Gemini: In Frame 2, the eyelids are partially closed, suggesting a blink or squint."
+        "Natural eye movements accompanying mouth articulation.",
+        "Consistent gaze direction."
       ],
-      "blink_rate": 0.0,
+      "blink_rate": null,
       "expected_rate_range": [
         15,
         20
       ]
     },
     "facial_microexpressions": {
-      "score": 0.4,
-      "findings": [
-        "Natural facial movement patterns"
-      ]
+      "score": 0.0,
+      "findings": []
     },
     "body_movement": {
-      "score": 0.4,
-      "findings": [
-        "Natural head movement patterns"
-      ]
+      "score": 0.0,
+      "findings": []
     },
     "audio_visual_sync": null,
     "identity_match": {
-      "score": 0.24999999999999997,
+      "score": 0.0,
       "findings": [
-        "High identity match: 95.26%",
-        "Consistent identity across frames"
+        "Consistency: high"
       ],
-      "reference_similarity": 0.9525767364317725,
-      "frame_variance": 7.534117344737273e-05
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
     }
   },
-  "evidence_frames": [
-    {
-      "frame": 2,
-      "timestamp": "00:00.20",
-      "issue": "Partial eye closure appears somewhat unnatural/prolonged."
-    },
-    {
-      "frame": 1,
-      "timestamp": "00:00.10",
-      "issue": "Initial frame showing stiff facial posture and rigid body/hand position."
-    },
-    {
-      "frame": 4,
-      "timestamp": "00:00.40",
-      "issue": "Clear illustration of static facial features (eyes, forehead) despite subtle mouth movement."
-    },
-    {
-      "frame": 7,
-      "timestamp": "00:00.70",
-      "issue": "Mouth open for speech, yet surrounding facial areas remain unnaturally rigid."
-    },
-    {
-      "frame": 1,
-      "timestamp": "00:00.10",
-      "issue": "Extreme stillness of the body and unnaturally rigid hand placement (consistent across all frames)."
-    }
-  ]
+  "evidence_frames": []
 }
