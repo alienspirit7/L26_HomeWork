@@ -1,110 +1,106 @@
 {
-  "analysis_id": "c0742c19-862d-4bc3-812e-39c52678d3dc",
-  "timestamp": "2025-12-27T23:22:21.397009Z",
-  "verdict": "LIKELY_AUTHENTIC",
-  "confidence_score": 0.3970588235294117,
-  "processing_time_seconds": 28.14170217514038,
+  "analysis_id": "0cddef35-18bf-447a-ae67-a3d68f48a591",
+  "timestamp": "2025-12-27T23:57:29.372633Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "confidence_score": 0.9375000000000001,
+  "processing_time_seconds": 20.86765718460083,
   "detection_layers": {
     "book_verification": {
-      "score": 0.49999999999999994,
+      "score": 1.0,
       "findings": [
-        "Detected title: \\ :",
-        "Detected author: 5 an | AovaInceg Surocy",
-        "Spelling issues: ['IeMYHOLOS', 'Nee\u201d', 'Py@ecaoiin', 'AovaInceg', '5', 'TENBCAIK']",
-        "Book found: 'Review of the Research Program of the U.S. DRIVE Partnership' by National Academies of Sciences, Engineering, and Medicine, Division on Engineering and Physical Sciences, Board on Energy and Environmental Systems, Committee on the Review of the Research Program of the U.S. DRIVE Partnership, Phase 5",
-        "Key: **Egregious AI Artifact (Book Cover Text):** The text on the book cover is clearly unintelligible gibberish, a hallmark of AI generation struggles with realistic text. This is the strongest indicator of deepfake/AI manipulation.",
-        "Key: **Unnatural Eye Behavior:** The subject exhibits an unnaturally fixed gaze with a complete absence of blinking throughout the visible sequence, which is highly indicative of synthetic media.",
-        "Key: **Subtle Facial Stiffness:** While facial expressions change, they lack the natural fluidity and subtle micro-expressions found in authentic human interaction, particularly around the eyes, leading to an 'uncanny valley' effect.",
-        "Key: **Identity Consistency (Expected for Deepfakes):** The subject's appearance closely matches the provided reference photo, indicating that if this is a deepfake, the identity mapping has been successfully achieved."
+        "\"SUTOLKT\" is not a real word.",
+        "\"I\u00c7IYHOUO\u042f\" is a mix of Latin, Cyrillic/Greek-like characters and gibberish.",
+        "\"TEPBSAICMORBS\" is not a real word.",
+        "\"Sursnicer\" is likely gibberish or a misspelling.",
+        "\"Innavations\" is a misspelling of 'Innovations'.",
+        "\"Mnoafoegy\" is gibberish.",
+        "\"Miinabioes \u0442\u0430\u0441\u044f\u0438\u043a\u0435 \u0420\u0443\u0438\u0432\u0430\u0441\u0432\u043e\u0438\u0438 Pr\u043e\u0438\u043b\u044c\u043b\u0435\u0438\u0445\u0430\u0438, ii\u0433\u043a\u0435\u043b\u043f\u043c\u043e\u0438\u0438\u044f\" is a chaotic mix of Latin and Cyrillic-like characters, forming no coherent words or sentences in any known language.",
+        "Bottom text \"\u041b\u0415\u041d\u0421\u0418\u041b\u0418\u0422\u0413\u042b\" and \"\u041f\u0423\u0418\u041d\u0418\u0418\u0412\" are Cyrillic-like gibberish.",
+        "Inconsistent character sets (Latin, Cyrillic-like, Greek-like) mixed within single 'words' or phrases.",
+        "Text appears somewhat warped and inconsistent in font weight/baseline, especially smaller text.",
+        "No logical grammatical structure or meaning in the combined phrases.",
+        "Book appears to be AI-generated or fake",
+        "Key: The book cover contains extensive gibberish text, a mixture of different alphabets (Latin, Cyrillic-like), and clear misspellings, which are very strong indicators of AI generation.",
+        "Key: The book 'teleports' into the subject's hand between Frame 1 and Frame 2 without any visible natural movement, demonstrating an impossible physical transition.",
+        "Key: The subject's skin texture is unnaturally smooth and plastic-like, and hair rendering lacks natural detail, consistent with AI-generated visuals.",
+        "Key: Facial expressions and hand movements, particularly the grip on the book, show subtle signs of being stilted or rigid, suggesting artificial interpolation or generation.",
+        "Key: Eye reflections are generic, adding to the artificial appearance."
       ],
       "book_found": true,
-      "book_title": "Review of the Research Program of the U.S. DRIVE Partnership",
+      "book_title": "ADVANCED SUTOLKT I\u00c7IYHOUO\u042f TEPBSAICMORBS / Advanced Sursnicer Innavations In Mnoafoegy Miinabioes \u0442\u0430\u0441\u044f\u0438\u043a\u0435 \u0420\u0443\u0438\u0432\u0430\u0441\u0432\u043e\u0438\u0438 Pr\u043e\u0438\u043b\u044c\u043b\u0435\u0438\u0445\u0430\u0438, ii\u0433\u043a\u0435\u043b\u043f\u043c\u043e\u0438\u0438\u044f",
       "spelling_errors": [
-        "IeMYHOLOS",
-        "Nee\u201d",
-        "Py@ecaoiin",
-        "AovaInceg",
-        "5",
-        "TENBCAIK",
-        "The largest text ('A\u00d3VAINCED S\u00daTOLKT I\u0106\u00da\u00ddH\u00daOLI\u00d3R T\u00c9\u041fBC\u00c1I\u0106M\u00d3PBS') is clearly AI-generated gibberish or heavily distorted, non-sensical characters.",
-        "The mid-sized text 'Advanced Surviver' contains a likely spelling error ('Survicer' or 'Survivor' expected).",
-        "The mid-sized text 'Inavations In MinorRonep' contains a spelling error ('Innovations' expected) and gibberish ('MinorRonep').",
-        "The smallest text at the bottom ('\u041b\u0435\u0442\u044e\u0447\u043d\u043b\u0438\u0434\u044b', '\u041f\u043f\u0446\u043f\u043c\u043f\u0438\u0432') appears to be malformed, non-sensical characters resembling Cyrillic but lacking coherence."
+        "\"SUTOLKT\" is not a real word.",
+        "\"I\u00c7IYHOUO\u042f\" is a mix of Latin, Cyrillic/Greek-like characters and gibberish.",
+        "\"TEPBSAICMORBS\" is not a real word.",
+        "\"Sursnicer\" is likely gibberish or a misspelling.",
+        "\"Innavations\" is a misspelling of 'Innovations'.",
+        "\"Mnoafoegy\" is gibberish.",
+        "\"Miinabioes \u0442\u0430\u0441\u044f\u0438\u043a\u0435 \u0420\u0443\u0438\u0432\u0430\u0441\u0432\u043e\u0438\u0438 Pr\u043e\u0438\u043b\u044c\u043b\u0435\u0438\u0445\u0430\u0438, ii\u0433\u043a\u0435\u043b\u043f\u043c\u043e\u0438\u0438\u044f\" is a chaotic mix of Latin and Cyrillic-like characters, forming no coherent words or sentences in any known language.",
+        "Bottom text \"\u041b\u0415\u041d\u0421\u0418\u041b\u0418\u0422\u0413\u042b\" and \"\u041f\u0423\u0418\u041d\u0418\u0418\u0412\" are Cyrillic-like gibberish."
       ]
     },
     "eye_analysis": {
-      "score": 0.4,
+      "score": 0.7,
       "findings": [
-        "Normal blink rate: 18.8/min",
-        "Normal blink duration: 133ms",
-        "Gemini: The subject's eyes remain wide open and fixed on the camera throughout frames 2-8.",
-        "Gemini: There is no visible blinking across the provided sequence of frames.",
-        "Gemini: The gaze is unnaturally intense and unwavering."
+        "Gaze is directed consistently towards the camera.",
+        "No blinks observed within the short 8-frame sequence.",
+        "Eye reflections appear simplified and somewhat artificial, like uniform white dots, lacking complex detail often present in natural eye reflections."
       ],
-      "blink_rate": 18.75,
+      "blink_rate": null,
       "expected_rate_range": [
         15,
         20
       ]
     },
     "facial_microexpressions": {
-      "score": 0.4,
+      "score": 0.85,
       "findings": [
-        "Natural facial movement patterns"
+        "Overall lighting appears somewhat flat on the subject, lacking complex shadows that would suggest a natural environment with distinct light sources.",
+        "The transition of facial expressions (especially mouth movements) feels slightly interpolated or 'stuttering' rather than entirely fluid across frames.",
+        "Subject's skin texture appears overly smooth and 'plastic-like', lacking natural pores, fine lines, and blemishes.",
+        "Hair rendering lacks fine individual strands, appearing more like a solid, 'painted-on' mass.",
+        "Teeth appear uniformly white and generic, lacking natural variations."
       ]
     },
     "body_movement": {
-      "score": 0.4,
+      "score": 0.9,
       "findings": [
-        "Natural head movement patterns"
+        "The book appears instantly/teleports into the subject's hand between Frame 1 (no book) and Frame 2 (book present and held in position), without any visible arm movement bringing it into frame.",
+        "The hand holding the book (subject's left, viewer's right) maintains a rigid grip, with fingers appearing somewhat stiff and unnatural in their articulation.",
+        "Instantaneous appearance of the book in hand between frames.",
+        "Body pacing: slightly_robotic/stilted"
       ]
     },
     "audio_visual_sync": null,
     "identity_match": {
-      "score": 0.24999999999999997,
+      "score": 0.2,
       "findings": [
-        "High identity match: 95.00%",
-        "Consistent identity across frames"
+        "Consistency: high"
       ],
-      "reference_similarity": 0.9499935053779321,
-      "frame_variance": 0.00012070273671422073
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
     }
   },
   "evidence_frames": [
     {
       "frame": 2,
       "timestamp": "00:00.20",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters. Example: 'S\u00daTOLKT', 'T\u00c9\u041fBC\u00c1I\u0106M\u00d3PBS', 'MinorRonep', and malformed Cyrillic-like characters at the bottom."
+      "issue": "Book appears instantly, displaying gibberish text and mixed alphabets on its cover."
     },
     {
       "frame": 3,
       "timestamp": "00:00.30",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters. Unnaturally wide and fixed eyes."
+      "issue": "Visible gibberish text and misspellings on book cover; slightly unnatural mouth movement."
     },
     {
       "frame": 4,
       "timestamp": "00:00.40",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters. Fixed gaze and slightly stiff expression."
+      "issue": "Clear display of AI-generated text artifacts on book cover; generic teeth visible; overly smooth skin."
     },
     {
       "frame": 5,
       "timestamp": "00:00.50",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters."
-    },
-    {
-      "frame": 6,
-      "timestamp": "00:00.60",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters."
-    },
-    {
-      "frame": 7,
-      "timestamp": "00:00.70",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters. Unnaturally wide eyes and subtle stiffness in expression."
-    },
-    {
-      "frame": 8,
-      "timestamp": "00:00.80",
-      "issue": "Book cover text is AI-generated gibberish/malformed characters."
+      "issue": "Continued display of AI-generated text; rigid grip of fingers on the book."
     }
   ]
 }

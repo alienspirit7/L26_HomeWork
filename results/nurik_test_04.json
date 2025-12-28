@@ -1,113 +1,94 @@
 {
-  "analysis_id": "1b59ffe4-7f9b-4589-9dc3-20a49821c935",
-  "timestamp": "2025-12-27T23:26:59.641406Z",
-  "verdict": "LIKELY_AUTHENTIC",
-  "confidence_score": 0.47941176470588226,
-  "processing_time_seconds": 33.76350116729736,
+  "analysis_id": "2bbfd121-0bdd-4f89-9801-1e3683d54587",
+  "timestamp": "2025-12-27T23:59:03.131957Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "confidence_score": 0.8550000000000001,
+  "processing_time_seconds": 18.125362873077393,
   "detection_layers": {
     "book_verification": {
-      "score": 0.85,
+      "score": 1.0,
       "findings": [
-        "Detected title: | .",
-        "Detected author: _ SURCIOTIFA SO",
-        "Spelling issues: ['SO', 'SURCIOTIFA', '_']",
-        "Book not found in online databases",
-        "Key: **AI-Generated Text:** The most compelling evidence for manipulation is the text on the book cover. It contains multiple instances of misspelled words and incoherent gibberish ('SURCIOTIC', 'TECHIOQVS', 'ININTENS IN MIUALUVESVUE', 'AE THAL TAPE'). This is a hallmark artifact of current AI image and video generation models struggling with legible and meaningful text.",
-        "Key: **Inconsistent Text Generation:** The supposed publisher's name, 'AUROPHONES', exhibits subtle letter deformations and minor inconsistencies across different frames, indicating unstable AI rendering of textual elements.",
-        "Key: **Unnatural Eye Behavior:** The subject's gaze is unnaturally fixed directly at the camera, and there are no blinks observed across the 8-frame sequence, which is highly atypical for natural human interaction during speech.",
-        "Key: **Artificial Facial Expression:** The wide smile presented in frames 1-2 appears stiff and somewhat artificial, lacking the nuanced muscle engagement, particularly around the eyes, that is characteristic of a genuine human smile.",
-        "Key: **Identity Match:** The individual in the video frames strongly matches the provided reference photo, suggesting that if this is a deepfake, it is a manipulation *of* this specific individual."
+        "SURCIOTIC (likely misspell of 'Surgical' or similar)",
+        "TECHIOQVS (likely misspell of 'Techniques')",
+        "AURIOROBES (gibberish/non-existent publisher)",
+        "ININTENS IN MIIRAUAVIESWE (gibberish smaller text)",
+        "THE TRN TALPE (gibberish smaller text)",
+        "Generated text on the book cover consists of non-sensical words and character combinations.",
+        "Inconsistent font weighting and slight warping within the smaller text, typical of AI hallucinating text.",
+        "Book appears to be AI-generated or fake",
+        "Key: The book cover contains extensive gibberish text ('SURCIOTIC', 'TECHIOQVS', 'AURIOROBES', 'ININTENS IN MIIRAUAVIESWE', 'THE TRN TALPE') which is a critical and definitive indicator of AI generation.",
+        "Key: The skin texture on the subject's face appears unnaturally smooth and airbrushed, consistent with AI rendering.",
+        "Key: Hair rendering lacks natural detail and movement, appearing somewhat static.",
+        "Key: Facial movements, while broadly consistent with speech, possess an artificial smoothness, lacking subtle human micro-expressions and variations."
       ],
-      "book_found": false,
-      "book_title": "| .",
+      "book_found": true,
+      "book_title": "Advanced SURCIOTIC TECHIOQVS",
       "spelling_errors": [
-        "SO",
-        "SURCIOTIFA",
-        "_",
-        "SURCIOTIC (appears to be a misspelling or gibberish, possibly intended as 'Surgical' or similar).",
-        "TECHIOQVS (appears to be a misspelling or gibberish, possibly intended as 'Techniques').",
-        "ININTENS IN MIUALUVESVUE (entirely nonsensical gibberish).",
-        "AE THAL TAPE (nonsensical gibberish).",
-        "AUROPHONES (while a real word, its context here is questionable as a publisher name, and letters show subtle inconsistencies and deformation across frames, suggesting AI generation)."
+        "SURCIOTIC (likely misspell of 'Surgical' or similar)",
+        "TECHIOQVS (likely misspell of 'Techniques')",
+        "AURIOROBES (gibberish/non-existent publisher)",
+        "ININTENS IN MIIRAUAVIESWE (gibberish smaller text)",
+        "THE TRN TALPE (gibberish smaller text)"
       ]
     },
     "eye_analysis": {
-      "score": 0.4,
+      "score": 0.5,
       "findings": [
-        "Normal blink rate: 18.8/min",
-        "Normal blink duration: 167ms",
-        "Gemini: The subject maintains a consistently fixed and direct gaze towards the camera across all 8 frames.",
-        "Gemini: No blinking activity is observed within the provided sequence of frames."
+        "Eyes maintain a consistent direct gaze at the camera.",
+        "Pupil dilation and eye reflections appear consistent across frames.",
+        "Limited frames (8) prevent accurate assessment of blinking rate. No full blinks observed."
       ],
-      "blink_rate": 18.75,
+      "blink_rate": null,
       "expected_rate_range": [
         15,
         20
       ]
     },
     "facial_microexpressions": {
-      "score": 0.4,
+      "score": 0.8,
       "findings": [
-        "Natural facial movement patterns"
+        "Hair rendering, particularly on the crown and hairline, appears slightly less natural and somewhat 'painted' or static compared to the reference, lacking individual strand detail and natural movement.",
+        "Overall lighting on the face, while consistent, appears somewhat 'flat' or artificial, contributing to a slightly airbrushed look rather than dynamic natural lighting.",
+        "Subtle temporal morphing or smoothing of facial features (especially skin texture around the mouth and forehead) between frames, making the skin appear unnaturally flawless and lacking natural pores/imperfections.",
+        "Skin texture appears overly smooth, almost plasticky or airbrushed, lacking the typical subtle imperfections and variations of human skin."
       ]
     },
     "body_movement": {
-      "score": 0.4,
+      "score": 0.7,
       "findings": [
-        "Natural head movement patterns"
+        "Body pacing: somewhat_natural_but_overly_smooth"
       ]
     },
     "audio_visual_sync": null,
     "identity_match": {
-      "score": 0.24999999999999997,
+      "score": 0.2,
       "findings": [
-        "High identity match: 93.81%",
-        "Consistent identity across frames"
+        "Consistency: high"
       ],
-      "reference_similarity": 0.9381083210315243,
-      "frame_variance": 0.001168805282174913
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
     }
   },
   "evidence_frames": [
     {
       "frame": 1,
       "timestamp": "00:00.10",
-      "issue": "Book cover text contains gibberish ('SURCIOTIC', 'TECHIOQVS', 'ININTENS IN MIUALUVESVUE'); initial wide smile appears unnatural."
+      "issue": "Book title 'SURCIOTIC TECHIOQVS' is nonsensical, indicating AI-generated text. Author 'AURIOROBES' is gibberish. Smaller text is also gibberish."
     },
     {
       "frame": 2,
       "timestamp": "00:00.20",
-      "issue": "Book cover text contains gibberish; initial wide smile appears unnatural."
+      "issue": "Consistency of gibberish text on the book cover. Overly smooth skin texture."
     },
     {
       "frame": 3,
       "timestamp": "00:00.30",
-      "issue": "Book cover text contains gibberish; fixed gaze and lack of blinking observed."
-    },
-    {
-      "frame": 4,
-      "timestamp": "00:00.40",
-      "issue": "Book cover text contains gibberish; fixed gaze and lack of blinking observed."
-    },
-    {
-      "frame": 5,
-      "timestamp": "00:00.50",
-      "issue": "Book cover text contains gibberish; fixed gaze and lack of blinking observed."
+      "issue": "Mouth movement appears slightly too smooth and animated, lacking the full nuance of natural human speech. Smooth skin texture prominent."
     },
     {
       "frame": 6,
       "timestamp": "00:00.60",
-      "issue": "Book cover text contains gibberish; fixed gaze and lack of blinking observed."
-    },
-    {
-      "frame": 7,
-      "timestamp": "00:00.70",
-      "issue": "Book cover text contains gibberish; fixed gaze and lack of blinking observed."
-    },
-    {
-      "frame": 8,
-      "timestamp": "00:00.80",
-      "issue": "Book cover text contains gibberish; fixed gaze and lack of blinking observed; subtle deformation in 'AUROPHONES' text."
+      "issue": "Hairline and hair rendering appears somewhat flat and lacking natural individual strand detail."
     }
   ]
 }
