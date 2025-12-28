@@ -1,0 +1,97 @@
+{
+  "analysis_id": "8428184f-36cd-40c2-9a07-f95ae2c61a96",
+  "timestamp": "2025-12-28T00:21:14.168964Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "fake_confidence_score": 0.8050000000000002,
+  "processing_time_seconds": 22.29389715194702,
+  "detection_layers": {
+    "book_verification": {
+      "score": 1.0,
+      "findings": [
+        "Repetitive and unnatural title: 'data data science science'.",
+        "Inconsistent language use on cover: Main title in English, subtitles and author in Russian. This is unusual for a single edition book cover and often indicative of AI generation struggling with multilingual contexts.",
+        "The repetitive nature of the main title ('data data science science') is a common pattern observed in AI-generated text where the model attempts to reproduce words but lacks true understanding of semantic context or conventional titling.",
+        "While individual Russian words are correctly spelled, the overall composition and juxtaposition of English and Russian text without clear translation or bilingual formatting suggests an AI struggling with coherent text placement.",
+        "The publisher 'SAKAIM' is not widely recognized and could be a hallucination.",
+        "Book appears to be AI-generated or fake",
+        "Key: **CRITICAL AI INDICATOR:** The book cover exhibits highly unusual text generation, including the repetitive English title 'data data science science' and an unnatural mix of English and Russian text on the same cover. This is a very strong sign of AI-generated content struggling with coherent text synthesis.",
+        "Key: The subject's skin texture appears overly smooth and 'airbrushed,' lacking natural pores and fine details, a common AI rendering artifact.",
+        "Key: Hair rendering shows a lack of individual strand definition and natural flow, appearing somewhat blocky or static.",
+        "Key: Body movements, particularly the upper body stiffness and the mechanical introduction/removal of the book, suggest a lack of natural fluidity.",
+        "Key: Identity consistency is high with the reference photo, indicating that if it is a deepfake, the identity model is well-trained."
+      ],
+      "book_found": true,
+      "book_title": "data data science science",
+      "spelling_errors": [
+        "Repetitive and unnatural title: 'data data science science'.",
+        "Inconsistent language use on cover: Main title in English, subtitles and author in Russian. This is unusual for a single edition book cover and often indicative of AI generation struggling with multilingual contexts."
+      ]
+    },
+    "eye_analysis": {
+      "score": 0.1,
+      "findings": [
+        "Eyes maintain consistent direct gaze towards the camera.",
+        "Reflections in the eyes appear consistent across frames.",
+        "No full blinks observed across the 8 frames, which is insufficient to determine blink rate but warrants noting for longer video segments."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.8,
+      "findings": [
+        "Hair rendering lacks natural individual strand definition and realistic movement, particularly around the shoulders, appearing somewhat blocky or 'painted on' (e.g., Frame 5 & 6).",
+        "The lighting on the subject's face appears somewhat flat and uniformly applied, lacking the subtle variations and reflections typical of natural light interaction with varied skin topography. This contributes to the 'smooth' appearance.",
+        "Subtle inconsistencies in hair detail and texture between frames (e.g., Frame 1 vs. 2) that don't fully align with head movement, suggesting potential temporal instability in rendering.",
+        "Skin texture across the face (especially forehead) appears overly smooth, lacking natural pores, fine lines, or minor blemishes. This 'airbrushed' or 'plastic' look is a common AI artifact."
+      ]
+    },
+    "body_movement": {
+      "score": 0.7,
+      "findings": [
+        "The upper body of the individual appears notably stiff, with minimal natural micro-movements of the torso and shoulders, common in AI-generated videos.",
+        "Arm movements to introduce and remove the book (frames 3-4 and 6-7) are somewhat deliberate and lack the fluid, natural momentum seen in authentic human movements, feeling slightly mechanical.",
+        "Body pacing: slightly_robotic"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.0,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 5,
+      "timestamp": "00:00.50",
+      "issue": "Book cover text: 'data data science science' title with mixed English and Russian text, and generic/unknown publisher 'SAKAIM'."
+    },
+    {
+      "frame": 5,
+      "timestamp": "00:00.50",
+      "issue": "Skin texture appears overly smooth and artificial, lacking natural detail."
+    },
+    {
+      "frame": 5,
+      "timestamp": "00:00.50",
+      "issue": "Hair rendering lacks individual strand definition, appearing somewhat blocky."
+    },
+    {
+      "frame": 4,
+      "timestamp": "00:00.40",
+      "issue": "Abrupt appearance of the book with motion blur, combined with overall stiff body posture."
+    },
+    {
+      "frame": 6,
+      "timestamp": "00:00.60",
+      "issue": "Repetitive book title 'data data science science' clearly visible, along with mixed language subtitles and potential AI-generated publisher name."
+    }
+  ]
+}

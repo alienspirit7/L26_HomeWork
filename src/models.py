@@ -64,7 +64,7 @@ class DetectionResult:
     analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat() + "Z")
     verdict: DetectionVerdict = DetectionVerdict.INCONCLUSIVE
-    confidence_score: float = 0.5
+    fake_confidence_score: float = 0.5
     processing_time_seconds: float = 0.0
     
     book_verification: Optional[BookVerificationResult] = None
@@ -82,7 +82,7 @@ class DetectionResult:
             "analysis_id": self.analysis_id,
             "timestamp": self.timestamp,
             "verdict": self.verdict.value,
-            "confidence_score": self.confidence_score,
+            "fake_confidence_score": self.fake_confidence_score,
             "processing_time_seconds": self.processing_time_seconds,
             "detection_layers": {
                 "book_verification": self._layer_to_dict(self.book_verification),

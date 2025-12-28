@@ -1,0 +1,106 @@
+{
+  "analysis_id": "2968882f-43b9-4ef3-8104-ddd379d32a8e",
+  "timestamp": "2025-12-28T00:27:00.100341Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "fake_confidence_score": 0.7325000000000002,
+  "processing_time_seconds": 25.88896894454956,
+  "detection_layers": {
+    "book_verification": {
+      "score": 0.0,
+      "findings": [
+        "Key: The text on the book cover is remarkably clear, accurate, and refers to a real published book with genuine authors and endorsements. This is highly unusual for AI hallucination and suggests either a sophisticated AI text rendering, or the book object itself is authentic and the person is a deepfake.",
+        "Key: The hands holding the book show significant signs of AI generation: unnaturally smooth, waxy skin texture, lack of natural creases and pores, and slightly abnormal anatomical features (e.g., elongated right thumb).",
+        "Key: The person's facial skin appears very smooth, almost poreless, and the hair rendering is uniform and lacks natural detail.",
+        "Key: Mouth movements, while continuous, have a subtle 'uncanny valley' feel, appearing somewhat rubbery or generated rather than fully natural.",
+        "Key: Overall body pacing and head movements are stiff and lack natural micro-adjustments."
+      ],
+      "book_found": true,
+      "book_title": "Trustworthy Online Controlled Experiments: A Practical Guide to A/B Testing (inferred from visible text and authors)",
+      "spelling_errors": []
+    },
+    "eye_analysis": {
+      "score": 0.7,
+      "findings": [
+        "Eyes maintain a generally forward gaze towards the camera.",
+        "Small eye movements detected.",
+        "A blink/eye narrowing appears between Frame 3 and Frame 4.",
+        "While blinking occurs, the gaze occasionally feels slightly fixed or less dynamic than natural interaction."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.95,
+      "findings": [
+        "The hands gripping the book, especially the thumb on the right hand, exhibit an unnaturally smooth, almost waxy texture, lacking natural skin creases, pores, and anatomical definition.",
+        "Hair appears quite uniform and flat, especially around the face and shoulders, lacking individual strand detail and natural volume variations.",
+        "Subtle inconsistencies in lighting, particularly between the hands and the face, suggesting separate rendering or compositing.",
+        "No obvious temporal flickering in these static frames, but the overall 'digital cleanliness' of the image is consistent with AI generation.",
+        "The right thumb appears somewhat elongated and unnaturally smooth/crease-less in several frames (e.g., Frame 1, 2, 3).",
+        "Fingers on both hands lack natural texture and anatomical detail, appearing overly uniform and smooth."
+      ]
+    },
+    "body_movement": {
+      "score": 0.9,
+      "findings": [
+        "Lack of natural micro-adjustments or shifts in hand grip on the book.",
+        "Minimal head movement, contributing to a somewhat stiff overall presentation.",
+        "Body pacing: slightly_robotic"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.1,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "Right thumb appears unnaturally long and smooth, lacking realistic creases and texture. Left hand fingers also overly smooth."
+    },
+    {
+      "frame": 2,
+      "timestamp": "00:00.20",
+      "issue": "Consistent waxy texture and lack of detail on both hands. Mouth movement appears slightly artificial."
+    },
+    {
+      "frame": 3,
+      "timestamp": "00:00.30",
+      "issue": "Hands maintain unnatural smoothness. Hair appears flat and uniform."
+    },
+    {
+      "frame": 4,
+      "timestamp": "00:00.40",
+      "issue": "Eyes are slightly narrowed/blinking, but the overall facial expression and skin texture remain very smooth. Hands remain problematic."
+    },
+    {
+      "frame": 5,
+      "timestamp": "00:00.50",
+      "issue": "Persistent unnatural smoothness of hands and skin. Mouth shape has a slightly 'generated' appearance."
+    },
+    {
+      "frame": 6,
+      "timestamp": "00:00.60",
+      "issue": "Hair rendering is consistent in its artificial flatness. Hands continue to show waxy texture."
+    },
+    {
+      "frame": 7,
+      "timestamp": "00:00.70",
+      "issue": "Subtle lighting inconsistencies between hands and face are noticeable."
+    },
+    {
+      "frame": 8,
+      "timestamp": "00:00.80",
+      "issue": "Overall 'digital cleanliness' and stiffness in posture suggest AI generation, despite accurate book text."
+    }
+  ]
+}

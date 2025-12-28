@@ -1,0 +1,94 @@
+{
+  "analysis_id": "f139a25d-4e95-4ca7-b09b-eb600307eff4",
+  "timestamp": "2025-12-28T00:16:24.876564Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "fake_confidence_score": 0.6950000000000001,
+  "processing_time_seconds": 24.152809858322144,
+  "detection_layers": {
+    "book_verification": {
+      "score": 1.0,
+      "findings": [
+        "MACHINIE (should be MACHINE)",
+        "LEARNDGGY (gibberish, likely intended for 'LEARNING' or similar)",
+        "TATA SCUBLICTAI (gibberish/made-up words)",
+        "BOFEKGIJE (gibberish author name)",
+        "Subtitle text contains numerous misspellings and non-existent words (e.g., 'Conprougnaty', 'Gochakta', 'Premponente', 'Anayctivs', 'Pnedienbere', 'Analice', 'Pnuccka', 'Soortroyge')",
+        "The entire subtitle is a pattern of AI-generated nonsense text, resembling English words but forming no coherent meaning.",
+        "Random and inconsistent capitalization within the words of the subtitle.",
+        "Books on the background shelf display indecipherable and gibberish text patterns, a common AI artifact for peripheral text.",
+        "Book appears to be AI-generated or fake",
+        "Key: The most critical and definitive indicator of AI generation is the text on the book cover. The title 'MACHINIE LEARNDGGY TATA SCUBLICTAI' and the author 'BOFEKGIJE' contain clear spelling errors and gibberish words.",
+        "Key: The entire subtitle of the book consists of AI-generated nonsense text, forming patterns that resemble English but have no coherent meaning, which is a hallmark artifact of AI struggling with text generation.",
+        "Key: Further reinforcing AI generation, the books visible on the background bookshelf also display unreadable, gibberish text patterns instead of legitimate titles.",
+        "Key: While the identity of the person consistently matches the reference photo across all frames, and facial movements (mouth opening, smiling) appear generally natural for static images, these elements are insufficient to override the strong AI indicators found in the text and environmental details.",
+        "Key: Subtle observations of overly smooth skin texture and slight artificiality in hair rendering also contribute to the deepfake assessment."
+      ],
+      "book_found": true,
+      "book_title": "Mastering MACHINIE LEARNDGGY TATA SCUBLICTAI",
+      "spelling_errors": [
+        "MACHINIE (should be MACHINE)",
+        "LEARNDGGY (gibberish, likely intended for 'LEARNING' or similar)",
+        "TATA SCUBLICTAI (gibberish/made-up words)",
+        "BOFEKGIJE (gibberish author name)",
+        "Subtitle text contains numerous misspellings and non-existent words (e.g., 'Conprougnaty', 'Gochakta', 'Premponente', 'Anayctivs', 'Pnedienbere', 'Analice', 'Pnuccka', 'Soortroyge')"
+      ]
+    },
+    "eye_analysis": {
+      "score": 0.2,
+      "findings": [
+        "The subject maintains a direct gaze towards the camera.",
+        "Eye reflections appear consistent with frontal lighting."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.7,
+      "findings": [
+        "Subtle softness and slightly 'painted-on' appearance of hair edges, particularly around the shoulders and next to the face.",
+        "The skin texture appears somewhat overly smooth or airbrushed, lacking fine pores or natural imperfections visible in the reference photo, contributing to a slightly artificial look.",
+        "Not detectable with static frames."
+      ]
+    },
+    "body_movement": {
+      "score": 0.3,
+      "findings": [
+        "Body pacing: inconclusive (static frames provided, unable to assess continuous movement)"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.1,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "The book title 'MACHINIE LEARNDGGY TATA SCUBLICTAI' contains glaring spelling errors and gibberish, indicating AI generation."
+    },
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "The author name 'BOFEKGIJE' on the book cover is gibberish."
+    },
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "The book's subtitle is composed of entirely nonsensical, AI-generated text patterns."
+    },
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "Books on the background shelf display unreadable, AI-generated text patterns."
+    }
+  ]
+}

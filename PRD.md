@@ -331,7 +331,7 @@ Deepfake technology has advanced significantly, enabling the creation of highly 
   "analysis_id": "uuid-v4",
   "timestamp": "ISO-8601",
   "verdict": "LIKELY_DEEPFAKE | LIKELY_AUTHENTIC | INCONCLUSIVE",
-  "confidence_score": 0.0-1.0,
+  "fake_confidence_score": 0.0-1.0,
   "processing_time_seconds": 45.2,
   "detection_layers": {
     "book_verification": {

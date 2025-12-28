@@ -17,7 +17,7 @@ def print_results(result):
     print("ANALYSIS RESULTS")
     print("=" * 60)
     print(f"\n{'VERDICT:':<20} {result.verdict.value}")
-    print(f"{'Confidence Score:':<20} {result.confidence_score:.2%}")
+    print(f"{'Fake Confidence Score:':<20} {result.fake_confidence_score:.2%}")
     print(f"{'Processing Time:':<20} {result.processing_time_seconds:.1f}s")
     
     print("\n" + "-" * 60)

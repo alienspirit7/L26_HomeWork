@@ -1,0 +1,102 @@
+{
+  "analysis_id": "56746eae-62a3-4f9b-882f-dc180bb97d24",
+  "timestamp": "2025-12-28T00:20:27.586177Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "fake_confidence_score": 0.8450000000000001,
+  "processing_time_seconds": 21.78746795654297,
+  "detection_layers": {
+    "book_verification": {
+      "score": 1.0,
+      "findings": [
+        "ALCHOANITHMS (should be ALGORITHMS)",
+        "Author 'VEEVAR' is a variation of 'Varma' but not identical to known co-author for a similar title, suggesting alteration or generation.",
+        "Sub-text below title is partially intelligible but quickly devolves into gibberish.",
+        "Bottom text is completely illegible/gibberish (e.g., 'AIMAFELN DTOY').",
+        "Inconsistent letter spacing and font clarity in smaller text.",
+        "Blurry and warping text segments.",
+        "Nonsensical character sequences at the bottom of the cover.",
+        "General lack of sharp detail expected on a real book cover.",
+        "Book appears to be AI-generated or fake",
+        "Key: The book cover contains critical AI artifacts: a significant misspelling ('ALCHOANITHMS' for 'ALGORITHMS'), distorted and illegible gibberish text, and a slightly altered author name.",
+        "Key: Temporal flickering and warping are visible in the book's details, especially the small text.",
+        "Key: The subject's skin exhibits an unnaturally smooth, 'filtered' appearance, common in AI-generated or enhanced visuals.",
+        "Key: The subject's facial expressions and body movements, while not overtly 'robotic', lack some natural fluidity and micro-variations, contributing to a slightly artificial feel.",
+        "Key: No blinks observed across the 8 frames, which is slightly atypical for natural human behavior over this duration with varying expressions."
+      ],
+      "book_found": true,
+      "book_title": "Mastering MACHINE LEARNING ALCHOANITHMS",
+      "spelling_errors": [
+        "ALCHOANITHMS (should be ALGORITHMS)",
+        "Author 'VEEVAR' is a variation of 'Varma' but not identical to known co-author for a similar title, suggesting alteration or generation.",
+        "Sub-text below title is partially intelligible but quickly devolves into gibberish.",
+        "Bottom text is completely illegible/gibberish (e.g., 'AIMAFELN DTOY')."
+      ]
+    },
+    "eye_analysis": {
+      "score": 0.6,
+      "findings": [
+        "Eyes remain open throughout the 8 provided frames, with a consistent direct gaze towards the camera.",
+        "Eye reflections are consistent, indicating a single, stable light source.",
+        "Absence of blinks across 8 frames is unusual, even for a short sequence, particularly given changes in facial expression."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.7,
+      "findings": [
+        "Slightly blurred or softened edges where hair meets background, particularly on the right side of the subject's head (viewer's left).",
+        "The outlines of the subject's arms and shoulders against the desk and background appear slightly less sharp than expected, suggestive of compositing or blending.",
+        "Lighting on the book appears somewhat flat compared to the subject's face, lacking realistic reflections or dynamic shadows that would be expected from a prop in a real scene.",
+        "Subtle flickering or warping in the details of the book cover, especially in the smaller, illegible text at the bottom, between frames (e.g., Frame 1 vs Frame 2).",
+        "Skin texture appears unusually smooth, potentially due to over-smoothing or AI rendering, lacking typical fine pores or imperfections."
+      ]
+    },
+    "body_movement": {
+      "score": 0.6,
+      "findings": [
+        "Minor head and mouth movements feel somewhat constrained or unnatural in their transitions, lacking fluid micro-expressions.",
+        "Body pacing: slightly_robotic"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.1,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "Book cover text 'ALCHOANITHMS' is misspelled; bottom text is gibberish ('AIMAFELN DTOY')."
+    },
+    {
+      "frame": 2,
+      "timestamp": "00:00.20",
+      "issue": "Book cover text 'ALCHOANITHMS' is misspelled; bottom text (gibberish) shows slight temporal shift/warp compared to Frame 1. Mouth widely open in an unnatural transition."
+    },
+    {
+      "frame": 3,
+      "timestamp": "00:00.30",
+      "issue": "Book cover text 'ALCHOANITHMS' is misspelled; bottom text (gibberish) continues to be present and slightly unstable. Skin appears highly smoothed."
+    },
+    {
+      "frame": 6,
+      "timestamp": "00:00.60",
+      "issue": "Book cover text 'ALCHOANITHMS' is misspelled. Hair edges on the right side of the head appear somewhat softened/blended."
+    },
+    {
+      "frame": 8,
+      "timestamp": "00:00.80",
+      "issue": "Book cover text 'ALCHOANITHMS' is misspelled. Overall movement pacing feels slightly stiff, especially mouth shape."
+    }
+  ]
+}

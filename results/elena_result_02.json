@@ -1,0 +1,52 @@
+{
+  "analysis_id": "5d390d99-4841-464f-88bb-6e21090453ed",
+  "timestamp": "2025-12-28T00:12:27.219380Z",
+  "verdict": "LIKELY_AUTHENTIC",
+  "fake_confidence_score": 0.0,
+  "processing_time_seconds": 14.78691291809082,
+  "detection_layers": {
+    "book_verification": {
+      "score": 0.0,
+      "findings": [
+        "Key: The book prominently displayed, 'The Four' by Scott Galloway, is a real and accurately represented publication. All visible text (title, author, subtitle, endorsement blurb) matches the real book, with no spelling errors, gibberish, or AI text artifacts.",
+        "Key: The subject's body pacing and movements, including head shifts and hand gestures, appear natural and fluid. There is no evidence of robotic, jerky, or unnaturally smooth motions, nor any impossible position changes or tremors.",
+        "Key: No AI generation signals were detected. This includes an absence of blending artifacts, consistent lighting throughout the scene, and stable background elements. Body parts, including hands and fingers, appear anatomically correct and rendered naturally.",
+        "Key: Eye movements are natural, including a clear blink, and gaze remains consistent. The subject's identity is a strong match to the provided reference photo and remains highly consistent across all video frames."
+      ],
+      "book_found": true,
+      "book_title": "the four",
+      "spelling_errors": []
+    },
+    "eye_analysis": {
+      "score": 0.0,
+      "findings": [
+        "Natural blinking observed between Frame 5 and Frame 6.",
+        "Eye gaze is consistent and appears natural, directed towards the viewer.",
+        "Eye reflections (specular highlights) are stable and consistent across frames."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.0,
+      "findings": []
+    },
+    "body_movement": {
+      "score": 0.0,
+      "findings": []
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.0,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": []
+}

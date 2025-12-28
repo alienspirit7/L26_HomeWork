@@ -167,21 +167,21 @@ class DeepfakeDetector:
         if scores:
             weights = self.config.layer_weights
             total_weight = sum(weights.get(k, 0.2) for k in scores)
-            result.confidence_score = sum(
+            result.fake_confidence_score = sum(
                 scores[k] * weights.get(k, 0.2) for k in scores
             ) / total_weight if total_weight > 0 else confidence
         else:
-            result.confidence_score = confidence
+            result.fake_confidence_score = confidence
         
         # Evidence penalty
         if result.evidence_frames:
             evidence_penalty = min(0.2, len(result.evidence_frames) * 0.03)
-            result.confidence_score = min(1.0, result.confidence_score + evidence_penalty)
+            result.fake_confidence_score = min(1.0, result.fake_confidence_score + evidence_penalty)
         
         # Determine verdict
-        if overall == "LIKELY_DEEPFAKE" or result.confidence_score >= self.config.authentic_threshold:
+        if overall == "LIKELY_DEEPFAKE" or result.fake_confidence_score >= self.config.authentic_threshold:
             result.verdict = DetectionVerdict.LIKELY_DEEPFAKE
-        elif overall == "LIKELY_AUTHENTIC" or result.confidence_score <= self.config.deepfake_threshold:
+        elif overall == "LIKELY_AUTHENTIC" or result.fake_confidence_score <= self.config.deepfake_threshold:
             result.verdict = DetectionVerdict.LIKELY_AUTHENTIC
         else:
             result.verdict = DetectionVerdict.INCONCLUSIVE

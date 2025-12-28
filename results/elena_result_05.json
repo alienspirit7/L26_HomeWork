@@ -1,0 +1,100 @@
+{
+  "analysis_id": "28a0b92d-0fab-4e67-8453-1bc4d7b10ed2",
+  "timestamp": "2025-12-28T00:19:17.338234Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "fake_confidence_score": 0.8375000000000001,
+  "processing_time_seconds": 20.22138810157776,
+  "detection_layers": {
+    "book_verification": {
+      "score": 1.0,
+      "findings": [
+        "\"Mastieriiing\" is a misspelling (likely 'Mastering')",
+        "\"PREDIENTIVE\" is a misspelling (likely 'Predictive')",
+        "\"ANALLYKa.G\" is a nonsensical distortion (likely 'Analytics')",
+        "\"Data-Oneoives for the Fugire\" - gibberish text, non-existent words.",
+        "\"Sata Dnretyles for thecbaiyes\" - gibberish text, non-existent words.",
+        "\"FUTEF\" - likely AI-generated placeholder text.",
+        "Inconsistent letter sizing, spacing, and font characteristics within the same 'words' and lines.",
+        "The overall composition of the text appears to be AI-generated attempts at mimicking English words and titles, but failing to form coherent language.",
+        "Book appears to be AI-generated or fake",
+        "Key: The most critical indicator is the text on the book cover, which is demonstrably AI-generated gibberish with numerous misspellings and nonsensical phrases. This is a hallmark of deepfake/AI-generated content.",
+        "Key: Facial movements, especially mouth articulation, appear somewhat robotic, exaggerated, and lack natural fluidity.",
+        "Key: Skin texture exhibits unnatural smoothness, consistent with AI rendering.",
+        "Key: The lighting on the book cover appears artificial and inconsistent with the overall scene lighting.",
+        "Key: Subtle temporal flickering and blending artifacts are detectable in the face and hair across frames."
+      ],
+      "book_found": true,
+      "book_title": "Mastieriiing PREDIENTIVE ANALLYKa.G",
+      "spelling_errors": [
+        "\"Mastieriiing\" is a misspelling (likely 'Mastering')",
+        "\"PREDIENTIVE\" is a misspelling (likely 'Predictive')",
+        "\"ANALLYKa.G\" is a nonsensical distortion (likely 'Analytics')"
+      ]
+    },
+    "eye_analysis": {
+      "score": 0.3,
+      "findings": [
+        "Subject blinks once (F7).",
+        "Gaze is consistently directed towards the camera.",
+        "Eye reflections appear consistent across frames.",
+        "Given the short clip, it's difficult to assess blink rate for abnormality, but the single blink observed appears natural."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.85,
+      "findings": [
+        "Edges of hair sometimes appear unnaturally sharp or 'cut out' against the background (e.g., around shoulders in F1, F2).",
+        "Subtle blending inconsistencies visible around the lower jawline in some frames (e.g., F2, F6).",
+        "The book cover appears unnaturally bright and uniformly lit, almost as if superimposed, lacking realistic depth and shadow interaction with the hands/environment.",
+        "Slight inconsistencies in shadow play on the face and neck between frames, suggesting manipulated lighting.",
+        "Subtle flickering or minor variations in skin texture and hair detail between consecutive frames, indicating AI regeneration rather than continuous organic motion.",
+        "The interior of the mouth (tongue, teeth) can show slight artificiality and inconsistencies in detail across frames where the mouth is open (F2, F3, F5, F6).",
+        "Skin texture on the face can appear overly smooth or 'plastic-like' in some areas, lacking natural pores and imperfections (e.g., forehead, cheeks in F2, F3).",
+        "Hair rendering, while generally good, can sometimes appear a bit too uniform or less natural at the strands' ends."
+      ]
+    },
+    "body_movement": {
+      "score": 0.7,
+      "findings": [
+        "Facial expressions, particularly mouth movements, appear somewhat exaggerated and less fluid than natural human speech in rapid transitions (e.g., F1 to F2, F2 to F3, F3 to F4).",
+        "Body pacing: slightly robotic"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.2,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "Book cover text: 'Mastieriiing PREDIENTIVE ANALLYKa.G', 'Data-Oneoives for the Fugire', 'Sata Dnretyles for thecbaiyes' - clearly AI-generated gibberish. Hair edges show slight blending artifact."
+    },
+    {
+      "frame": 2,
+      "timestamp": "00:00.20",
+      "issue": "Exaggerated mouth opening, slightly robotic transition. Skin texture appears overly smooth. Book cover lighting appears artificial."
+    },
+    {
+      "frame": 3,
+      "timestamp": "00:00.30",
+      "issue": "Continued slightly unnatural mouth movement and skin texture. Book text remains clear AI artifact."
+    },
+    {
+      "frame": 7,
+      "timestamp": "00:00.70",
+      "issue": "Blink appears natural, but overall facial rendering still shows subtle AI characteristics."
+    }
+  ]
+}

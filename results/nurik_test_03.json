@@ -2,7 +2,7 @@
   "analysis_id": "0c54da2a-6d40-432a-9816-d97aacc587b8",
   "timestamp": "2025-12-27T23:58:20.902063Z",
   "verdict": "LIKELY_DEEPFAKE",
-  "confidence_score": 0.6450000000000001,
+  "fake_confidence_score": 0.6450000000000001,
   "processing_time_seconds": 16.05011796951294,
   "detection_layers": {
     "book_verification": {

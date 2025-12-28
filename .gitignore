@@ -100,3 +100,7 @@ models/
 *.psd
 *.ai
 *.eps
+
+# Exception: Keep media files in files_to_check folder
+!files_to_check/
+!files_to_check/**

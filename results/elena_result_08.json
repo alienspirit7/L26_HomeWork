@@ -1,0 +1,101 @@
+{
+  "analysis_id": "3f5ddab5-5c5a-4bdb-bdcd-d6ed297dca15",
+  "timestamp": "2025-12-28T00:33:01.457332Z",
+  "verdict": "LIKELY_DEEPFAKE",
+  "fake_confidence_score": 0.9300000000000002,
+  "processing_time_seconds": 29.654944896697998,
+  "detection_layers": {
+    "book_verification": {
+      "score": 1.0,
+      "findings": [
+        "\"adjunet professor\" instead of \"adjunct professor\" in Steve Blank's blurb (visible in all frames).",
+        "The blurb by John P. A. Ioannidis is abruptly cut off mid-sentence/word, reading \"combination of b enjoyable to read, and dealing with h\" (visible in all frames). This is highly indicative of AI generation struggling with text completion.",
+        "The small print text at the very bottom of the book cover (e.g., \"Cover imagery of the authors\") is consistently blurry, distorted, and borders on gibberish, not clearly rendered or readable (visible in all frames).",
+        "Minor inconsistencies in text crispness and slight positional shifts of text characters between frames.",
+        "Key: The most critical finding is the presence of clear AI-generated text artifacts on the visible book cover, including a definitive spelling error ('adjunet' instead of 'adjunct') and an abruptly truncated sentence in a blurb, which are highly inconsistent with professionally published books.",
+        "Key: The very bottom text on the book cover is consistently blurry and unreadable, indicative of AI struggling with fine details.",
+        "Key: Subtle but noticeable stiffness and somewhat robotic pacing in head and facial movements, particularly around the mouth.",
+        "Key: Mild blending artifacts are present around the hair and the lips, which exhibit an unnaturally smooth or stretched texture during movement.",
+        "Key: Temporal anomalies such as flickering highlights on finger rings further support AI generation."
+      ],
+      "book_found": true,
+      "book_title": "Trustworthy Online Controlled Experiments: A Practical Guide to A/B Testing (inferred from blurbs)",
+      "spelling_errors": [
+        "\"adjunet professor\" instead of \"adjunct professor\" in Steve Blank's blurb (visible in all frames)."
+      ]
+    },
+    "eye_analysis": {
+      "score": 0.4,
+      "findings": [
+        "Gaze is consistently directed forward, towards the viewer, across all frames.",
+        "No blinks or partial blinks are observed within the 8 provided frames.",
+        "The gaze appears somewhat static, contributing to the overall 'canned' or posed feel, although this alone is not definitive of a deepfake."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.8,
+      "findings": [
+        "Slight halo effect or inconsistent sharpness around the hair edges where it meets the background (e.g., top of head in Frame 1 vs. Frame 8).",
+        "Lips appear unnaturally smooth and slightly stretched or texture-mapped during opening and closing, lacking natural creasing and micro-detail (e.g., Frame 2 vs Frame 4).",
+        "While consistent, the facial lighting has a slight flatness, lacking the nuanced shadows and highlights that would typically define natural contours and depth.",
+        "Minor flickering or subtle shifts in reflections/highlights on the rings worn on the fingers between frames (e.g., left hand ring in Frame 1 vs. Frame 2).",
+        "Very subtle shifts in the crispness and rendering of the book text between frames, despite minimal movement.",
+        "Fingers holding the book sometimes appear indistinct or overly soft, particularly where they grip the bottom edge of the book."
+      ]
+    },
+    "body_movement": {
+      "score": 0.7,
+      "findings": [
+        "Head movements appear somewhat stiff and lack natural fluidity, transitioning between poses rather than flowing smoothly.",
+        "Subtle variations in the exact shape and distinctness of fingers holding the book, especially the left hand (viewer's right) fingers in frames 1-3, and the right thumb (viewer's left) in frame 4.",
+        "Body pacing: somewhat robotic"
+      ]
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.5,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "Spelling error 'adjunet professor' (should be 'adjunct professor') in Steve Blank's blurb on the book cover."
+    },
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "The blurb by John P. A. Ioannidis is cut off mid-sentence/word ('combination of b enjoyable to read, and dealing with h') on the book cover."
+    },
+    {
+      "frame": 1,
+      "timestamp": "00:00.10",
+      "issue": "The bottom-most text on the book cover is blurry, distorted, and unreadable."
+    },
+    {
+      "frame": 2,
+      "timestamp": "00:00.20",
+      "issue": "Lips show unnatural smoothness and stretching during mouth movement."
+    },
+    {
+      "frame": 4,
+      "timestamp": "00:00.40",
+      "issue": "Subtle distortion and indistinctness observed in the fingers holding the book."
+    },
+    {
+      "frame": 6,
+      "timestamp": "00:00.60",
+      "issue": "Minor temporal flickering and inconsistent highlights observed on the finger rings."
+    }
+  ]
+}

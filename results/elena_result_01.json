@@ -1,0 +1,54 @@
+{
+  "analysis_id": "8fd3c0d1-acf9-4ca6-b8ff-bdf56e9a8d1a",
+  "timestamp": "2025-12-28T00:08:33.745371Z",
+  "verdict": "LIKELY_AUTHENTIC",
+  "fake_confidence_score": 0.0,
+  "processing_time_seconds": 17.65876603126526,
+  "detection_layers": {
+    "book_verification": {
+      "score": 0.0,
+      "findings": [
+        "Key: The book visible in the frames, 'Trustworthy Online Controlled Experiments' by Ron Kohavi, Diane Tang, and Ya Xu, is a verifiable, real published book. The title, authors, and cover art (including the blue hippo image) perfectly match the actual publication, strongly contradicting a common AI generation artifact.",
+        "Key: No spelling errors, gibberish, or AI-specific text artifacts were found on the book cover or any other visible text.",
+        "Key: The subject's facial expressions, lip movements (consistent with speech implied in Frame 1), and hand movements appear natural and fluid, without any robotic, jerky, or unnaturally smooth motions.",
+        "Key: There are no detected AI generation artifacts such as blending issues at facial or body boundaries, lighting inconsistencies, temporal flickering, or warping in the background.",
+        "Key: The subject's identity is highly consistent across all video frames and matches the provided reference photo closely, including facial features, hair, and a visible mole on the cheek.",
+        "Key: No anomalies in body parts (e.g., fingers, teeth) were observed, and skin/hair rendering appears natural.",
+        "Key: Eye movements and gaze are natural, and eye reflections are consistent."
+      ],
+      "book_found": true,
+      "book_title": "TRUSTWORTHY ONLINE CONTROLLED EXPERIMENTS: A PRACTICAL GUIDE TO A/B TESTING",
+      "spelling_errors": []
+    },
+    "eye_analysis": {
+      "score": 0.0,
+      "findings": [
+        "Gaze shifts naturally from slightly above camera to direct.",
+        "Eye reflections are consistent across frames."
+      ],
+      "blink_rate": null,
+      "expected_rate_range": [
+        15,
+        20
+      ]
+    },
+    "facial_microexpressions": {
+      "score": 0.0,
+      "findings": []
+    },
+    "body_movement": {
+      "score": 0.0,
+      "findings": []
+    },
+    "audio_visual_sync": null,
+    "identity_match": {
+      "score": 0.0,
+      "findings": [
+        "Consistency: high"
+      ],
+      "reference_similarity": 1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": []
+}

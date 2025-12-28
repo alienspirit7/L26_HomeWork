@@ -11,10 +11,11 @@
 - [How It Works](#how-it-works)
 - [Repository Structure](#repository-structure)
 - [Data Flow Process](#data-flow-process)
+- [Scoring Logic](#scoring-logic)
 - [Installation](#installation)
 - [Usage Guide](#usage-guide)
 - [Understanding Results](#understanding-results)
-- [Training Data](#training-data)
+- [Real-World Test Results](#real-world-test-results)
 - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 
@@ -64,6 +65,7 @@ The book requirement serves as a **physical proof of presence**:
 - Text on covers provides OCR verification opportunities
 - The book can be verified against online databases (Is it a real book?)
 - Holding an object tests natural hand movements and interactions
+- AI struggles to generate readable, consistent text—making fake books obvious
 
 ---
 
@@ -88,12 +90,14 @@ The book requirement serves as a **physical proof of presence**:
 │  │ • Is book real? │  │ • Body pacing   │  │ • Blend artifacts│    │
 │  │ • Spelling check│  │ • Movement paths│  │ • Lighting issues│    │
 │  │ • AI text detect│  │ • Hand tremors  │  │ • Temporal glitch│    │
+│  │ Weight: 30%     │  │ Weight: 20%     │  │ Weight: 25%      │    │
 │  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘     │
 │           │                    │                     │              │
 │  ┌────────▼────────┐  ┌────────▼────────┐                          │
 │  │ EYE ANALYSIS    │  │ IDENTITY MATCH  │                          │
 │  │ • Blink patterns│  │ • Photo matching│                          │
 │  │ • Gaze tracking │  │ • Frame-to-frame│                          │
+│  │ Weight: 15%     │  │ Weight: 10%     │                          │
 │  └────────┬────────┘  └────────┬────────┘                          │
 │           │                    │                                    │
 │           └────────────────────┘                                    │
@@ -111,7 +115,7 @@ The book requirement serves as a **physical proof of presence**:
 ## Repository Structure
 
 ```
-deepfake-detection/
+L26_HomeWork/
 │
 ├── 📄 README.md                 # This documentation
 ├── 📄 PRD.md                    # Product Requirements Document
@@ -121,87 +125,158 @@ deepfake-detection/
 ├── 📄 .env.example              # Environment variable template
 │
 ├── 📁 src/                      # Source code
-│   ├── config.py                # Configuration management
-│   ├── models.py                # Data models & types
-│   ├── detector.py              # Main Gemini-powered detector
+│   ├── __init__.py              # Package exports
+│   ├── config.py                # Configuration management (thresholds, weights)
+│   ├── models.py                # Data models & types (DetectionResult, LayerResult)
+│   ├── detector.py              # Main detector orchestrator (DeepfakeDetector)
 │   ├── main.py                  # CLI entry point
 │   ├── cli_output.py            # CLI formatting utilities
 │   │
 │   ├── 📁 preprocessing/        # Input processing
-│   │   ├── video.py             # Video frame extraction
-│   │   ├── face.py              # Face detection
-│   │   └── audio.py             # Audio extraction
+│   │   ├── __init__.py          # Exports VideoProcessor, AudioProcessor
+│   │   ├── video.py             # Video frame extraction (10 fps default)
+│   │   ├── face.py              # Face detection utilities
+│   │   └── audio.py             # Audio extraction & transcription
 │   │
-│   ├── 📁 analyzers/            # Gemini analysis
+│   ├── 📁 analyzers/            # AI analysis
+│   │   ├── __init__.py          # Exports GeminiAnalyzer
 │   │   ├── gemini.py            # Gemini API integration
-│   │   └── prompts.py           # Analysis prompts
+│   │   └── prompts.py           # Analysis prompts with detection tasks
 │   │
 │   └── 📁 utils/                # Utilities
-│       └── helpers.py           # Helper functions
+│       ├── __init__.py
+│       └── helpers.py           # Helper functions (timestamp formatting)
 │
-└── 📁 training/                 # Training data (optional)
-    ├── 📁 real/                 # Known authentic videos
-    └── 📁 fake/                 # Known deepfake videos
+├── 📁 files_to_check/           # Input files for testing
+│   ├── elena_reference.jpeg     # Reference photo
+│   └── elena_video_*.mov        # Videos to analyze
+│
+├── 📁 results/                  # Analysis output files
+│   ├── nurik_test_01.json       # REAL video result
+│   ├── nurik_test_02.json       # FAKE video result (93.75% confidence)
+│   ├── nurik_test_03.json       # FAKE video result (64.50% confidence)
+│   └── nurik_test_04.json       # FAKE video result (85.50% confidence)
+│
+├── 📁 training/                 # Training data
+│   ├── 📁 references/           # Reference photos for training
+│   │   └── nurik_reference.jpeg
+│   ├── 📁 real/                 # Known authentic videos
+│   │   └── nurik_real_01.mov
+│   └── 📁 fake/                 # Known deepfake videos
+│       ├── nurik_fake_01.mov
+│       ├── nurik_fake_02.mov
+│       └── nurik_fake_03.mov
+│
+└── 📁 tests/                    # Test files
 ```
 
 ---
 
 ## Data Flow Process
 
-### Step-by-Step Analysis Flow
+### Complete Analysis Pipeline
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    GEMINI-ONLY DATA FLOW PROCESS                         │
+│                         DATA FLOW PROCESS                                │
 └─────────────────────────────────────────────────────────────────────────┘
 
-   INPUT                    PREPROCESSING                 GEMINI ANALYSIS
-┌─────────────┐          ┌─────────────────┐         ┌─────────────────────┐
-│ Reference   │          │                 │         │                     │
-│ Photo       │─────────▶│  Load Image     │────────▶│                     │
-│ (photo.jpg) │          │                 │         │                     │
-└─────────────┘          └─────────────────┘         │   GEMINI ANALYSIS   │
-                                                     │                     │
-┌─────────────┐          ┌─────────────────┐         │  • Book Authenticity│
-│ Video File  │          │                 │         │  • Spelling Errors  │
-│ (video.mp4) │─────────▶│ Frame Extraction│────────▶│  • Body Pacing      │
-│             │          │ (10 fps)        │         │  • Movement Paths   │
-└─────────────┘          └────────┬────────┘         │  • AI Signals       │
-                                  │                  │  • Eye Analysis     │
-                                  ▼                  │  • Identity Match   │
-                         ┌─────────────────┐         │                     │
-                         │ Audio Extraction│────────▶│                     │
-                         │ (optional)      │         └──────────┬──────────┘
-                         └─────────────────┘                    │
-                                                                ▼
-                                              ┌─────────────────────────┐
-                                              │    RESULT PROCESSING    │
-                                              │  • Weighted scoring     │
-                                              │  • Confidence calculation│
-                                              │  • Final verdict        │
-                                              └────────────┬────────────┘
-                                                           │
-                                                           ▼
-   OUTPUT
+     INPUTS                PREPROCESSING              GEMINI ANALYSIS
+┌──────────────────┐    ┌─────────────────────┐    ┌─────────────────────┐
+│ Reference Photo  │    │                     │    │                     │
+│ (photo.jpg)      │───▶│ Load as RGB array   │───▶│                     │
+│                  │    │ via PIL             │    │                     │
+└──────────────────┘    └─────────────────────┘    │  GEMINI 2.5 FLASH   │
+                                                   │                     │
+┌──────────────────┐    ┌─────────────────────┐    │  Multimodal prompt: │
+│ Video File       │    │                     │    │  • Book analysis    │
+│ (video.mp4)      │───▶│ Frame Extraction    │───▶│  • Spelling/text    │
+│                  │    │ (10 fps → 8 frames) │    │  • Body movement    │
+└──────────────────┘    └─────────────────────┘    │  • AI signals       │
+                                                   │  • Eye analysis     │
+                        ┌─────────────────────┐    │  • Identity match   │
+                        │ Audio Extraction    │───▶│                     │
+                        │ (optional)          │    └──────────┬──────────┘
+                        └─────────────────────┘               │
+                                                              ▼
+                                                   ┌─────────────────────┐
+                                                   │  GEMINI RESPONSE    │
+                                                   │  (Structured JSON)  │
+                                                   └──────────┬──────────┘
+                                                              │
+                                                              ▼
+                                               ┌──────────────────────────┐
+                                               │   RESULT PROCESSING      │
+                                               │                          │
+                                               │  1. Parse layer scores   │
+                                               │  2. Apply weights        │
+                                               │  3. Calculate confidence │
+                                               │  4. Add evidence penalty │
+                                               │  5. Determine verdict    │
+                                               └────────────┬─────────────┘
+                                                            │
+                                                            ▼
+      OUTPUT
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ DETECTION REPORT                                                        │
-│ • Verdict: LIKELY_DEEPFAKE / LIKELY_AUTHENTIC / INCONCLUSIVE           │
-│ • Confidence Score: 0-100%                                              │
-│ • Layer-by-layer findings                                               │
-│ • Evidence frames                                                       │
+│ DETECTION RESULT (JSON)                                                 │
+│                                                                         │
+│ • analysis_id: Unique UUID for tracking                                 │
+│ • timestamp: ISO 8601 timestamp                                         │
+│ • verdict: LIKELY_DEEPFAKE | LIKELY_AUTHENTIC | INCONCLUSIVE           │
+│ • fake_confidence_score: 0.0 (authentic) to 1.0 (deepfake)             │
+│ • detection_layers: Per-layer scores and findings                       │
+│ • evidence_frames: Specific frames with issues                          │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Detailed Step Descriptions
+### Stage-by-Stage Breakdown
 
-| Step | Module | What It Does | Possible Results |
-|------|--------|--------------|------------------|
-| **1. Load Reference** | `detector.py` | Loads reference photo as image array | Image ready for Gemini |
-| **2. Frame Extraction** | `video.py` | Extracts video frames at 10 fps | Frames ready for analysis |
-| **3. Audio Extraction** | `audio.py` | Extracts audio track (optional) | Transcription for context |
-| **4. Gemini Analysis** | `gemini.py` | Sends frames + reference to Gemini | Comprehensive analysis JSON |
-| **5. Score Processing** | `detector.py` | Converts Gemini response to layer scores | Per-layer scores |
-| **6. Verdict** | `detector.py` | Calculates weighted score, determines verdict | LIKELY_DEEPFAKE / LIKELY_AUTHENTIC / INCONCLUSIVE |
+| Stage | Module | Input | Output | Description |
+|-------|--------|-------|--------|-------------|
+| **1. Load Reference** | `detector.py` | Photo path | RGB numpy array | Opens reference photo via PIL, converts to RGB |
+| **2. Extract Frames** | `preprocessing/video.py` | Video path | List of frames | Extracts at 10 fps, selects up to 8 representative frames |
+| **3. Extract Audio** | `preprocessing/audio.py` | Video path | Transcription text | Optional: Extracts audio for context |
+| **4. Gemini Analysis** | `analyzers/gemini.py` | Reference + Frames | Structured JSON | Sends to Gemini with detailed prompt, returns analysis |
+| **5. Process Results** | `detector.py` | Gemini JSON | Layer results | Converts to `DetectionResult` with typed layers |
+| **6. Calculate Verdict** | `detector.py` | Layer scores | Final verdict | Weighted average + evidence penalty → verdict |
+
+---
+
+## Scoring Logic
+
+### Layer Weights
+
+Each analysis layer contributes to the final score with the following weights:
+
+| Layer | Weight | What It Detects |
+|-------|--------|-----------------|
+| **Book Verification** | 30% | Fake/non-existent books, gibberish text, spelling errors |
+| **AI Signals** | 25% | Blending artifacts, lighting issues, temporal anomalies, texture problems |
+| **Body Movement** | 20% | Unnatural pacing, impossible physics, teleportation |
+| **Eye Analysis** | 15% | Missing blinks, artificial reflections, unnatural gaze |
+| **Identity Match** | 10% | Consistency with reference photo across frames |
+
+### Confidence Score Calculation
+
+```
+weighted_score = Σ (layer_score × layer_weight) / Σ weights
+
+# Evidence penalty (more evidence = higher confidence in deepfake)
+evidence_penalty = min(0.2, evidence_frame_count × 0.03)
+final_score = weighted_score + evidence_penalty
+```
+
+### Verdict Thresholds
+
+| Confidence Score | Verdict |
+|-----------------|---------|
+| **0% - 35%** | `LIKELY_AUTHENTIC` |
+| **35% - 55%** | `INCONCLUSIVE` |
+| **55% - 100%** | `LIKELY_DEEPFAKE` |
+
+> **Score Interpretation**: The score represents *likelihood of being a deepfake*. 
+> - **Lower score** = More likely authentic
+> - **Higher score** = More likely fake
 
 ---
 
@@ -293,12 +368,6 @@ python -m src.main -p reference.jpg -v verification.mp4 --output result.json
 | `-o, --output` | Save JSON report to file |
 | `--api-key` | Gemini API key (overrides .env) |
 
-### Provide API Key via Command Line
-
-```bash
-python -m src.main -p photo.jpg -v video.mp4 --api-key YOUR_API_KEY
-```
-
 ### Programmatic Usage
 
 ```python
@@ -315,7 +384,7 @@ result = detector.analyze(
 
 # Access results
 print(f"Verdict: {result.verdict.value}")
-print(f"Confidence: {result.confidence_score:.2%}")
+print(f"Fake Confidence: {result.fake_confidence_score:.2%}")
 
 # Get detailed layer results
 if result.book_verification:
@@ -339,242 +408,417 @@ detector.close()
 
 | Verdict | Confidence Score | Meaning |
 |---------|------------------|---------|
-| **LIKELY_AUTHENTIC** | 0% - 50% | Video appears genuine, low manipulation indicators |
-| **INCONCLUSIVE** | 50% - 70% | Unable to determine, requires human review |
-| **LIKELY_DEEPFAKE** | 70% - 100% | Strong indicators of manipulation detected |
+| **LIKELY_AUTHENTIC** | 0% - 35% | Video appears genuine, low manipulation indicators |
+| **INCONCLUSIVE** | 35% - 55% | Unable to determine, requires human review |
+| **LIKELY_DEEPFAKE** | 55% - 100% | Strong indicators of manipulation detected |
 
-> **Note**: Score represents likelihood of deepfake. Lower = more likely authentic.
+### Output JSON Structure
+
+```json
+{
+  "analysis_id": "unique-uuid-v4",
+  "timestamp": "2025-12-27T23:56:09.583292Z",
+  "verdict": "LIKELY_DEEPFAKE | LIKELY_AUTHENTIC | INCONCLUSIVE",
+  "fake_confidence_score": 0.0-1.0,
+  "processing_time_seconds": 14.09,
+  "detection_layers": {
+    "book_verification": {
+      "score": 0.0-1.0,
+      "findings": ["list of observations"],
+      "book_found": true/false,
+      "book_title": "string or null",
+      "spelling_errors": ["list of errors"]
+    },
+    "eye_analysis": {
+      "score": 0.0-1.0,
+      "findings": ["list of observations"],
+      "blink_rate": null,
+      "expected_rate_range": [15, 20]
+    },
+    "facial_microexpressions": {
+      "score": 0.0-1.0,
+      "findings": ["AI signal observations"]
+    },
+    "body_movement": {
+      "score": 0.0-1.0,
+      "findings": ["movement observations"]
+    },
+    "identity_match": {
+      "score": 0.0-1.0,
+      "findings": ["Consistency: high/medium/low"],
+      "reference_similarity": 0.0-1.0,
+      "frame_variance": 0.0
+    }
+  },
+  "evidence_frames": [
+    {"frame": 2, "timestamp": "00:00.20", "issue": "description of issue"}
+  ]
+}
+```
 
 ---
 
-### Example 1: LIKELY_AUTHENTIC (Low Suspicion)
+## Real-World Test Results
 
-```
-============================================================
-ANALYSIS RESULTS
-============================================================
+The following results are from actual test runs using the `nurik` training dataset.
 
-VERDICT:             LIKELY_AUTHENTIC
-Confidence Score:    23.00%
-Processing Time:     18.5s
+### Test 01: REAL Video (nurik_real_01.mov)
 
-------------------------------------------------------------
-LAYER SCORES (Gemini Analysis)
-------------------------------------------------------------
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_AUTHENTIC` |
+| **Confidence** | 0.00% |
+| **Processing Time** | 14.1 seconds |
 
-Book Verification: 15.00%
-  • Detected title: Thinking, Fast and Slow
-  • Book is REAL: 'Thinking, Fast and Slow' by Daniel Kahneman
-  • No spelling errors detected
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 0% | "Trillion Dollar Coach" is a legitimate publication with no spelling errors |
+| Eye Analysis | 0% | Natural eye movements, consistent gaze direction |
+| Body Movement | 0% | No anomalies detected |
+| Identity Match | 0% | High consistency with reference photo |
 
-Movement Analysis: 20.00%
-  • Body pacing: natural
-  • No movement path issues detected
-
-AI Signals: 10.00%
-  • No blending artifacts
-  • Consistent lighting
-  • No temporal anomalies
-
-Eye Analysis: 25.00%
-  • Normal blink patterns observed
-
-Identity Match: 30.00%
-  • Matches reference photo
-  • High consistency across frames
-
-============================================================
-```
-
-**What This Means:**
-- ✅ The book is real and correctly spelled
-- ✅ Body movements appear natural
-- ✅ No AI generation artifacts detected
-- ✅ The person matches the reference photo
-- ✅ **Recommended Action**: Approve the verification
+**Key Findings:**
+- ✅ Book is REAL - "Trillion Dollar Coach" verified as legitimate publication
+- ✅ No spelling errors or AI-generated text artifacts
+- ✅ Natural facial expressions and hand movements
+- ✅ High identity consistency
 
 ---
 
-### Example 2: LIKELY_DEEPFAKE (High Suspicion)
+### Test 02: FAKE Video (nurik_fake_01.mov)
 
-```
-============================================================
-ANALYSIS RESULTS
-============================================================
+| Field | Value |
+|-------|-------|
+| **Verdict** | ❌ `LIKELY_DEEPFAKE` |
+| **Confidence** | 93.75% |
+| **Processing Time** | 20.9 seconds |
 
-VERDICT:             LIKELY_DEEPFAKE
-Confidence Score:    85.00%
-Processing Time:     38.7s
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | Extensive gibberish text: "SUTOLKT", "IÇIYHOUOЯ", "TEPBSAICMORBS" |
+| Eye Analysis | 70% | No blinks observed, artificial eye reflections |
+| AI Signals | 85% | Plastic-like skin, stuttering expressions |
+| Body Movement | 90% | Book "teleports" into hand between frames |
+| Identity Match | 20% | High consistency (person matches, but video is fake) |
 
-------------------------------------------------------------
-LAYER SCORES
-------------------------------------------------------------
-
-Book Verification: 80.00%
-  • Detected title: Thinkng Fast adn Slow
-  • Spelling issues: ['Thinkng', 'adn']
-  • Book not found in online databases
-
-Eye Analysis: 90.00%
-  • Very low blink rate: 3.2/min (normal: 15-20)
-  • Abnormal blink duration: 45ms
-
-Facial Expressions: 85.00%
-  • Very static facial movements detected
-  • Inconsistent micro-expression patterns
-
-Body Movement: 75.00%
-  • Unusually still head position
-  • Jerky head movements detected
-
-Identity Match: 70.00%
-  • Moderate identity match: 58.00%
-  • High identity variance across frames: 0.0823
-
-------------------------------------------------------------
-EVIDENCE FRAMES
-------------------------------------------------------------
-  Frame 45 (00:01.87): Blink anomaly detected
-  Frame 128 (00:05.33): Identity drift observed
-  Frame 256 (00:10.67): Book text distortion
-
-============================================================
-```
-
-**What This Means:**
-- ❌ The book title has spelling errors (AI-generated text artifact)
-- ❌ The person barely blinks (3.2/min vs normal 15-20/min)
-- ❌ Facial movements are unnaturally static
-- ❌ Identity varies significantly across frames
-- ❌ **Recommended Action**: REJECT - Request in-person verification
+**Evidence Frames:**
+| Frame | Time | Issue |
+|-------|------|-------|
+| 2 | 00:00.20 | Book appears instantly with gibberish text |
+| 3 | 00:00.30 | Visible gibberish text; unnatural mouth movement |
+| 4 | 00:00.40 | AI-generated text artifacts; overly smooth skin |
+| 5 | 00:00.50 | Rigid finger grip on book |
 
 ---
 
-### Example 3: INCONCLUSIVE (Requires Review)
+### Test 03: FAKE Video (nurik_fake_02.mov)
 
-```
-============================================================
-ANALYSIS RESULTS
-============================================================
+| Field | Value |
+|-------|-------|
+| **Verdict** | ❌ `LIKELY_DEEPFAKE` |
+| **Confidence** | 64.50% |
+| **Processing Time** | 16.1 seconds |
 
-VERDICT:             INCONCLUSIVE
-Confidence Score:    58.00%
-Processing Time:     45.1s
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | Non-existent title "SCIENTARK NIRSINE", gibberish author name |
+| Eye Analysis | 10% | Natural blink detected (Frame 2) |
+| AI Signals | 80% | "Painted" hair, unnaturally smooth jawline |
+| Body Movement | 20% | Natural movements |
+| Identity Match | 0% | High consistency |
 
-------------------------------------------------------------
-LAYER SCORES
-------------------------------------------------------------
-
-Book Verification: 45.00%
-  • Detected title: The Art of War
-  • Book found: 'The Art of War' by Sun Tzu
-  • Gemini: Text partially obscured by hand
-
-Eye Analysis: 65.00%
-  • Low blink rate: 11.3/min (normal: 15-20)
-  • Normal blink duration: 312ms
-
-Facial Expressions: 55.00%
-  • Moderate facial movement variance
-  • Some micro-expression inconsistencies
-
-Body Movement: 50.00%
-  • Natural head movement patterns
-  • Some unusual hand positioning
-
-Identity Match: 60.00%
-  • Moderate identity match: 71.00%
-  • Moderate identity variance: 0.0312
-
-============================================================
-```
-
-**What This Means:**
-- ⚠️ Book is real but text is partially hidden
-- ⚠️ Blink rate is slightly below normal range
-- ⚠️ Some inconsistencies but not definitive
-- ⚠️ Identity match is borderline (71%)
-- ⚠️ **Recommended Action**: Request human review or additional verification
+**Key Evidence:**
+- ❌ Book title is FAKE - "SCIENTARK NIRSINE" doesn't exist
+- ❌ Gibberish text on cover: "DANIELA RULLE AMMUR DUUDU DIIIIIIIUAS"
+- ⚠️ Eye blinks detected (positive sign)
+- ❌ Skin texture too smooth, teeth unnaturally perfect
 
 ---
 
-### Recommended Actions by Verdict
+### Test 04: FAKE Video (nurik_fake_03.mov)
 
-| Verdict | Action | Details |
-|---------|--------|---------|
-| **LIKELY_AUTHENTIC** | ✅ Approve | Proceed with verification |
-| **INCONCLUSIVE** | 👁️ Human Review | Have a trained operator review the video |
-| **LIKELY_DEEPFAKE** | ❌ Reject | Request in-person verification or additional proof |
+| Field | Value |
+|-------|-------|
+| **Verdict** | ❌ `LIKELY_DEEPFAKE` |
+| **Confidence** | 85.50% |
+| **Processing Time** | 18.1 seconds |
+
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | Misspelled words: "SURCIOTIC" (Surgical?), "TECHIOQVS" (Techniques?) |
+| Eye Analysis | 50% | No full blinks in 8-frame sequence |
+| AI Signals | 80% | "Painted" hair, flat lighting, airbrush-like skin |
+| Body Movement | 70% | Overly smooth body pacing |
+| Identity Match | 20% | High consistency |
+
+**Key Evidence:**
+- ❌ Book title contains obvious misspellings
+- ❌ Publisher "AURIOROBES" is gibberish
+- ❌ Skin has "plasticky" airbrushed appearance
+- ❌ Hair lacks individual strand detail
 
 ---
 
-## Training Data
+### Detection Summary
 
-### Purpose
+| Test | Ground Truth | Verdict | Confidence | Correct? |
+|------|--------------|---------|------------|----------|
+| nurik_test_01 | REAL | `LIKELY_AUTHENTIC` | 0.00% | ✅ |
+| nurik_test_02 | FAKE | `LIKELY_DEEPFAKE` | 93.75% | ✅ |
+| nurik_test_03 | FAKE | `LIKELY_DEEPFAKE` | 64.50% | ✅ |
+| nurik_test_04 | FAKE | `LIKELY_DEEPFAKE` | 85.50% | ✅ |
 
-Training data helps calibrate the system for your specific use case. While the tool works out-of-the-box, providing examples of real and fake videos improves accuracy.
+**Accuracy: 100% (4/4 correct classifications)**
 
-### Directory Structure
+---
 
-Create a `training/` folder in your project root:
+### Elena Test Dataset Results
 
-```
-training/
-├── real/                        # Known authentic videos
-│   ├── person1_real_01.mp4      # Real video of person 1
-│   ├── person1_real_02.mp4      # Another real video of person 1
-│   ├── person2_real_01.mp4      # Real video of person 2
-│   └── ...
-│
-└── fake/                        # Known deepfake videos
-    ├── person1_fake_01.mp4      # Deepfake of person 1
-    ├── person1_fake_02.mp4      # Another deepfake of person 1
-    ├── person2_fake_01.mp4      # Deepfake of person 2
-    └── ...
-```
+A second test dataset using **Elena's reference photo** was analyzed with 7 videos:
+- **Tests 01-03**: Real authentic videos
+- **Tests 04-07**: AI-generated deepfake videos
 
-### File Naming Convention
+#### Test Elena-01: REAL Video ✅
 
-Use this naming pattern for training files:
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_AUTHENTIC` |
+| **Confidence** | 0.00% |
+| **Processing Time** | 17.7 seconds |
 
-```
-{person_id}_{label}_{sequence}.{extension}
-```
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 0% | "Trustworthy Online Controlled Experiments" - verified real publication |
+| Eye Analysis | 0% | Natural gaze, consistent reflections |
+| Body Movement | 0% | Natural movements |
+| Identity Match | 0% | High consistency |
 
-| Component | Values | Example |
-|-----------|--------|---------|
-| `person_id` | Unique identifier for the person | `person1`, `john_doe`, `user_12345` |
-| `label` | `real` or `fake` | `real`, `fake` |
-| `sequence` | Number for multiple videos | `01`, `02`, `03` |
-| `extension` | Video format | `mp4`, `webm`, `mov` |
+---
 
-**Examples:**
-- `john_doe_real_01.mp4` - Real video of John Doe
-- `john_doe_fake_01.mp4` - Deepfake video of John Doe
-- `user_12345_real_02.mp4` - Second real video of user 12345
+#### Test Elena-02: REAL Video ✅
 
-### Reference Photos for Training
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_AUTHENTIC` |
+| **Confidence** | 0.00% |
+| **Processing Time** | 14.8 seconds |
 
-Place reference photos alongside training videos:
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 0% | "The Four" by Scott Galloway - verified real publication |
+| Eye Analysis | 0% | Natural blinking observed, consistent gaze |
+| Body Movement | 0% | Natural movements |
+| Identity Match | 0% | High consistency |
 
-```
-training/
-├── references/                  # Reference photos
-│   ├── person1_reference.jpg
-│   ├── person2_reference.jpg
-│   └── ...
-├── real/
-│   └── ...
-└── fake/
-    └── ...
-```
+---
 
-### Running Training Evaluation
+#### Test Elena-03: REAL Video ❌ (False Positive)
 
-```bash
-# Evaluate accuracy on training set (future feature)
-python -m src.main --evaluate training/
-```
+| Field | Value |
+|-------|-------|
+| **Verdict** | ❌ `LIKELY_DEEPFAKE` (Incorrect) |
+| **Confidence** | 73.25% |
+| **Processing Time** | 25.9 seconds |
+
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 0% | Real book detected correctly |
+| Eye Analysis | 70% | Gaze felt "slightly fixed" |
+| AI Signals | 95% | Flagged smooth skin, waxy texture on hands |
+| Body Movement | 90% | Marked as "slightly robotic" |
+| Identity Match | 10% | High consistency |
+
+**Key Observation:** Despite detecting a **real book** (score 0%), the final verdict was incorrectly flagged as deepfake due to video quality/compression issues being misinterpreted as AI artifacts.
+
+---
+
+#### Test Elena-04: FAKE Video ✅
+
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_DEEPFAKE` |
+| **Confidence** | 69.50% |
+| **Processing Time** | 24.2 seconds |
+
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | **GIBBERISH**: "MACHINIE LEARNDGGY TATA SCUBLICTAI", Author: "BOFEKGIJE" |
+| Eye Analysis | 20% | Consistent gaze |
+| AI Signals | 70% | Smooth skin, painted hair |
+| Body Movement | 30% | Inconclusive (static frames) |
+| Identity Match | 10% | High consistency |
+
+---
+
+#### Test Elena-05: FAKE Video ✅
+
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_DEEPFAKE` |
+| **Confidence** | 83.75% |
+| **Processing Time** | 20.2 seconds |
+
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | **GIBBERISH**: "Mastieriiing PREDIENTIVE ANALLYKa.G" |
+| Eye Analysis | 30% | Single blink observed |
+| AI Signals | 85% | Temporal flickering, blending artifacts |
+| Body Movement | 70% | Robotic facial expressions |
+| Identity Match | 20% | High consistency |
+
+---
+
+#### Test Elena-06: FAKE Video ✅
+
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_DEEPFAKE` |
+| **Confidence** | 84.50% |
+| **Processing Time** | 21.8 seconds |
+
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | **MISSPELLING**: "ALCHOANITHMS" (should be ALGORITHMS), gibberish: "AIMAFELN DTOY" |
+| Eye Analysis | 60% | No blinks in 8 frames |
+| AI Signals | 70% | Warping text, soft edges |
+| Body Movement | 60% | Constrained movements |
+| Identity Match | 10% | High consistency |
+
+---
+
+#### Test Elena-07: FAKE Video ✅
+
+| Field | Value |
+|-------|-------|
+| **Verdict** | ✅ `LIKELY_DEEPFAKE` |
+| **Confidence** | 80.50% |
+| **Processing Time** | 22.3 seconds |
+
+**Layer Scores:**
+| Layer | Score | Key Findings |
+|-------|-------|--------------|
+| Book Verification | 100% | **REPETITIVE**: "data data science science", mixed English/Russian text |
+| Eye Analysis | 10% | Consistent gaze |
+| AI Signals | 80% | Blocky hair, flat lighting |
+| Body Movement | 70% | Stiff upper body |
+| Identity Match | 0% | High consistency |
+
+---
+
+### Elena Detection Summary
+
+| Test | Ground Truth | Final Verdict | Confidence | Book Score | Correct? |
+|------|--------------|---------------|------------|------------|----------|
+| elena_01 | REAL | `LIKELY_AUTHENTIC` | 0.00% | 0% (Real) | ✅ |
+| elena_02 | REAL | `LIKELY_AUTHENTIC` | 0.00% | 0% (Real) | ✅ |
+| elena_03 | REAL | `LIKELY_DEEPFAKE` | 73.25% | 0% (Real) | ❌ False Positive |
+| elena_04 | FAKE | `LIKELY_DEEPFAKE` | 69.50% | 100% (Gibberish) | ✅ |
+| elena_05 | FAKE | `LIKELY_DEEPFAKE` | 83.75% | 100% (Gibberish) | ✅ |
+| elena_06 | FAKE | `LIKELY_DEEPFAKE` | 84.50% | 100% (Misspelling) | ✅ |
+| elena_07 | FAKE | `LIKELY_DEEPFAKE` | 80.50% | 100% (Repetitive) | ✅ |
+
+**Final Accuracy: 85.7% (6/7 correct classifications)**
+
+---
+
+### Book-Only vs Final Decision Analysis
+
+| Test | Book Score | Book-Only Decision | Final Decision | Better Approach? |
+|------|------------|-------------------|----------------|------------------|
+| elena_01 | 0% | ✅ AUTHENTIC | ✅ AUTHENTIC | Same |
+| elena_02 | 0% | ✅ AUTHENTIC | ✅ AUTHENTIC | Same |
+| elena_03 | 0% | ✅ AUTHENTIC | ❌ DEEPFAKE | **Book-only wins** |
+| elena_04 | 100% | ❌ DEEPFAKE | ❌ DEEPFAKE | Same |
+| elena_05 | 100% | ❌ DEEPFAKE | ❌ DEEPFAKE | Same |
+| elena_06 | 100% | ❌ DEEPFAKE | ❌ DEEPFAKE | Same |
+| elena_07 | 100% | ❌ DEEPFAKE | ❌ DEEPFAKE | Same |
+
+**Book-Only Accuracy: 100% (7/7)**
+**Final Decision Accuracy: 85.7% (6/7)**
+
+> [!IMPORTANT]
+> **Key Finding**: In this test set, the **book verification layer alone achieved 100% accuracy**, while the combined multi-layer approach introduced a false positive. This suggests that book text analysis is the most reliable deepfake indicator in scenarios where the subject holds a book.
+
+---
+
+### Conclusions: AI's Inability to Generate Convincing Text
+
+The test results reveal a **critical weakness in current AI video generation**: the inability to produce coherent, realistic text on objects like book covers.
+
+#### Observed AI Text Generation Failures
+
+| Pattern | Examples from Tests |
+|---------|---------------------|
+| **Gibberish Words** | "MACHINIE LEARNDGGY", "BOFEKGIJE", "SCUBLICTAI", "ANALLYKa.G" |
+| **Character Substitution** | "ALCHOANITHMS" → ALGORITHMS, "PREDIENTIVE" → PREDICTIVE |
+| **Word Repetition** | "data data science science" |
+| **Inconsistent Languages** | Mixed English/Russian on same cover |
+| **Nonsense Subtitles** | "Sata Dnretyles for thecbaiyes", "AIMAFELN DTOY" |
+
+#### Why AI Struggles with Text
+
+1. **Semantic Understanding**: AI generates patterns that *look* like text but lack semantic meaning
+2. **Consistency Requirements**: Text must remain stable across frames—AI often produces temporal flickering
+3. **Knowledge Gap**: AI cannot verify if a book title/author actually exists
+4. **Multi-language Confusion**: AI mixes languages inappropriately when generating text
+5. **Font Rendering**: AI struggles to maintain consistent font sizing and spacing
+
+> [!NOTE]
+> **Conclusion**: Current AI video generation technology **cannot reliably produce readable, semantically correct text**. This makes the "hold a real book" verification approach highly effective for deepfake detection.
+
+---
+
+### Suggested Next Steps for Testing (Version 2.0)
+
+#### 1. Address False Positive Issue
+
+The false positive in `elena_03` suggests the non-book layers may over-trigger on:
+- Compressed video artifacts
+- Low-quality camera footage
+- Natural skin smoothing (makeup, lighting)
+
+**Recommendations:**
+- [ ] Increase weight of book verification layer from 30% → 40%
+- [ ] Add video quality detection to adjust thresholds dynamically
+- [ ] Implement "high book confidence override" - if book is clearly real, reduce AI signal weight
+
+#### 2. Expand Book Verification Testing
+
+- [ ] Test with books in different languages (Spanish, French, Chinese)
+- [ ] Test with handwritten notes/signs instead of printed books
+- [ ] Test with digital screens showing text (tablets, monitors)
+- [ ] Test with partial book title visibility
+
+#### 3. Test Against Advanced Deepfake Methods
+
+- [ ] Test with AI-generated videos that use **real book cover images** (not AI-generated text)
+- [ ] Test with face-swap deepfakes on otherwise real footage
+- [ ] Test with audio deepfakes paired with real video
+
+#### 4. Improve Detection Metrics
+
+- [ ] Track false positive rate (FPR) and false negative rate (FNR) separately
+- [ ] Implement confidence intervals for verdicts
+- [ ] Add "certainty level" indicator (high/medium/low)
+
+#### 5. Additional Verification Layers
+
+- [ ] Add audio-visual sync analysis (currently null in all tests)
+- [ ] Implement temporal consistency scoring across more frames
+- [ ] Add background consistency checking (bookshelf text in elena_04 was also gibberish)
+
+> [!TIP]
+> **Priority Improvement**: Given that book verification achieved 100% accuracy while other layers introduced errors, consider a **hierarchical decision system**: if book verification score is 0% (real book), require stronger evidence from other layers before flagging as deepfake.
 
 ---
 
@@ -606,9 +850,9 @@ Adjust thresholds based on your security requirements:
 
 | Use Case | DEEPFAKE_THRESHOLD | AUTHENTIC_THRESHOLD |
 |----------|-------------------|---------------------|
-| **High Security** (banking) | 0.4 | 0.6 |
-| **Standard** (default) | 0.5 | 0.7 |
-| **Lenient** (low-risk) | 0.6 | 0.8 |
+| **High Security** (banking) | 0.30 | 0.50 |
+| **Standard** (default) | 0.35 | 0.55 |
+| **Lenient** (low-risk) | 0.45 | 0.65 |
 
 ---
 
@@ -621,7 +865,6 @@ Adjust thresholds based on your security requirements:
 | `GEMINI_API_KEY is required` | Set API key in `.env` or use `--api-key` |
 | `Cannot open video` | Check video format (MP4, WebM, MOV supported) |
 | `No face detected in reference` | Use a clearer, front-facing photo |
-| `OCR error` | Install Tesseract: `brew install tesseract` |
 | `Audio extraction failed` | Install FFmpeg: `brew install ffmpeg` |
 
 ### Exit Codes
