@@ -452,11 +452,46 @@ Replaced example outputs in README with **actual test results**:
 
 | Metric | Value |
 |--------|-------|
-| Total Prompts | 27 |
+| Total Prompts | 29 |
 | Files Created/Modified | ~40 |
 | Total Lines of Code | ~1,200 (reduced from ~2,500) |
 | Documentation Files | 4 (README.md, PRD.md, QUICKSTART.md, PROMPTS_LOG.md) |
 | Python Version | Upgraded from 3.9 → 3.11 |
-| Test Results | 1 real (AUTHENTIC) + 3 fake (DEEPFAKE) detected correctly |
+| Test Results | Nurik: 4/4 correct, Elena: 6/7 correct (1 false positive) |
+
+---
+
+## Prompt 28
+
+> **User Prompt:**
+> ```
+> Add also to the results of the elena data sets description in readme that on some runs even book detection was not consistent and created false positive alerts when seeing only one or two words being misspelled (mis read by AI). Meaning some prompt finetuning might be needed to ignore one or two inconsistent or very close words as compared to gibbrish version of the book cover text.
+> ```
+
+**Action Taken:**
+Added a warning note in the Elena Detection Summary section about inconsistent book detection:
+- Documented that some runs created false positive alerts when AI misread only 1-2 words
+- Suggested prompt fine-tuning may be needed to:
+  - Ignore 1-2 inconsistent words (OCR artifacts)
+  - Distinguish genuine gibberish vs. minor misreadings
+  - Apply higher threshold before flagging text as AI-generated
+
+---
+
+## Prompt 29
+
+> **User Prompt:**
+> ```
+> fix Analysis Layers (All Powered by Gemini) section of readme and update prompts log file
+> ```
+
+**Action Taken:**
+Fixed the ASCII diagram in README.md:
+- Corrected box alignment issues
+- Renamed "MOVEMENT" to "BODY MOVEMENT" for clarity
+- Improved the flow visualization showing all 5 layers converging to weighted scoring
+- Made diagram wider for better readability
+
+Updated this PROMPTS_LOG.md with prompts 28-29.
 
 ---

@@ -82,30 +82,30 @@ The book requirement serves as a **physical proof of presence**:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                  GEMINI MULTIMODAL ANALYSIS                          │
+│                    GEMINI MULTIMODAL ANALYSIS                       │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐     │
-│  │ BOOK ANALYSIS   │  │ MOVEMENT        │  │ AI SIGNALS      │     │
-│  │ • Is book real? │  │ • Body pacing   │  │ • Blend artifacts│    │
-│  │ • Spelling check│  │ • Movement paths│  │ • Lighting issues│    │
-│  │ • AI text detect│  │ • Hand tremors  │  │ • Temporal glitch│    │
-│  │ Weight: 30%     │  │ Weight: 20%     │  │ Weight: 25%      │    │
-│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘     │
-│           │                    │                     │              │
-│  ┌────────▼────────┐  ┌────────▼────────┐                          │
-│  │ EYE ANALYSIS    │  │ IDENTITY MATCH  │                          │
-│  │ • Blink patterns│  │ • Photo matching│                          │
-│  │ • Gaze tracking │  │ • Frame-to-frame│                          │
-│  │ Weight: 15%     │  │ Weight: 10%     │                          │
-│  └────────┬────────┘  └────────┬────────┘                          │
-│           │                    │                                    │
-│           └────────────────────┘                                    │
-│                    │                                                │
-│        ┌───────────▼───────────┐                                   │
-│        │   WEIGHTED SCORING    │                                   │
-│        │   & FINAL VERDICT     │                                   │
-│        └───────────────────────┘                                   │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐        │
+│  │ BOOK ANALYSIS   │ │ BODY MOVEMENT   │ │ AI SIGNALS      │        │
+│  │ • Is book real? │ │ • Body pacing   │ │ • Blend artifacts│       │
+│  │ • Spelling check│ │ • Movement paths│ │ • Lighting issues│       │
+│  │ • AI text detect│ │ • Hand tremors  │ │ • Temporal glitch│       │
+│  │ Weight: 30%     │ │ Weight: 20%     │ │ Weight: 25%      │       │
+│  └────────┬────────┘ └────────┬────────┘ └────────┬────────┘        │
+│           │                   │                   │                 │
+│  ┌────────┴────────┐ ┌────────┴────────┐          │                 │
+│  │ EYE ANALYSIS    │ │ IDENTITY MATCH  │          │                 │
+│  │ • Blink patterns│ │ • Photo matching│          │                 │
+│  │ • Gaze tracking │ │ • Frame-to-frame│          │                 │
+│  │ Weight: 15%     │ │ Weight: 10%     │          │                 │
+│  └────────┬────────┘ └────────┬────────┘          │                 │
+│           │                   │                   │                 │
+│           └─────────────┬─────┴───────────────────┘                 │
+│                         │                                           │
+│              ┌──────────▼──────────┐                                │
+│              │  WEIGHTED SCORING   │                                │
+│              │  & FINAL VERDICT    │                                │
+│              └─────────────────────┘                                │
 │                                                                     │
 └─────────────────────────────────────────────────────────────────────┘
 ```
