@@ -749,6 +749,12 @@ A second test dataset using **Elena's reference photo** was analyzed with 7 vide
 > [!IMPORTANT]
 > **Key Finding**: In this test set, the **book verification layer alone achieved 100% accuracy**, while the combined multi-layer approach introduced a false positive. This suggests that book text analysis is the most reliable deepfake indicator in scenarios where the subject holds a book.
 
+> [!WARNING]
+> **Inconsistent Book Detection**: On some test runs, book detection was not consistent and created **false positive alerts** when the AI misread only one or two words on the book cover (treating minor OCR errors as "misspellings"). This suggests that **prompt fine-tuning may be needed** to:
+> - Ignore 1-2 inconsistent or very similar words that could be OCR artifacts
+> - Distinguish between genuine gibberish text (e.g., "BOFEKGIJE", "SCUBLICTAI") vs. minor word misreadings
+> - Apply a higher threshold before flagging text as AI-generated
+
 ---
 
 ### Conclusions: AI's Inability to Generate Convincing Text
